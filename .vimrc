@@ -233,19 +233,6 @@ let g:airline_powerline_fonts = 1
 nmap <silent> <leader>b :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
-
-"-----Gist-----
-" Gist authorisation settings
-let g:github_user = $GITHUB_USER
-let g:github_token = $GITHUB_TOKEN
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 1
-" Related plugins:
-" https://github.com/mattn/webapi-vim
-" https://github.com/vim-scripts/Gist.vim
-" https://github.com/tpope/vim-fugitive
-" HTML generation using 'emmet-vim'
-" NORMAL mode Ctrl+y then , <C-y,>
 "
 "------------------------------------------------------------------------------
 " * Gitgutter
