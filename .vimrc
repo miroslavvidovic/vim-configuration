@@ -101,7 +101,7 @@ syntax on
 set background=dark
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
-colorscheme Tomorrow-Night
+colorscheme atom-dark-256
 "set t_ut=
 "
 " Line number section background color
@@ -156,23 +156,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
 "------------------------------------------------------------------------------
 " * CtrlP
 "-------------------------
@@ -562,4 +545,6 @@ highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
 highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
+""" Different colorscheme for bash and zsh files
+autocmd FileType sh,zsh colorscheme Tomorrow-Night
 " }}}
