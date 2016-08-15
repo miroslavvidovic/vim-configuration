@@ -410,13 +410,17 @@ highlight SyntasticStyleErrorSign ctermbg=none ctermfg=yellow
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-" Python 3 not 2
-let g:syntastic_python_python_exec = '/usr/bin/python3'
-" Passive mode for some file types
-augroup mySyntastic
-  au!
-  au FileType tex  let b:syntastic_mode = "passive"
-augroup END
+" Do not highlight errors
+let g:syntastic_enable_highlighting = 0
+" Populate the list of errors
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" Check on open disabled
+let g:syntastic_check_on_open = 0
+" Check on save disabled
+let g:syntastic_check_on_wq = 0
+" Only passive mode chekcing - only manual syntax checks
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
 "
 "------------------------------------------------------------------------------
 " * Ultisnips
@@ -547,4 +551,8 @@ endfun
 autocmd FilterWritePre * call SetDiffColors()
 """ Different colorscheme for bash and zsh files
 autocmd FileType sh,zsh colorscheme Tomorrow-Night
+autocmd FileType python colorscheme railscasts
+autocmd FileType css colorscheme molokai
+autocmd FileType php colorscheme jellybeans
+autocmd FileType html colorscheme railscasts
 " }}}
