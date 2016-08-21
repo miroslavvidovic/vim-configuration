@@ -1,3 +1,8 @@
+" Miroslav Vidović
+"
+" vimrc file
+"
+" -----------------------------------------------------------------------------
 " Settings {{{
 "
 "------------------------------------------------------------------------------
@@ -70,7 +75,7 @@ set splitbelow
 set splitright
 " Enable the mouse
 " set mouse=a
-" Visual autocomplete for command menu (e.g. :e ~/path/to/file)
+" Visual autocomplete for command menu
 set wildmenu
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
@@ -413,8 +418,8 @@ set statusline+=%*
 " Do not highlight errors
 let g:syntastic_enable_highlighting = 0
 " Populate the list of errors
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 " Check on open disabled
 let g:syntastic_check_on_open = 0
 " Check on save disabled
@@ -501,9 +506,13 @@ map <Leader>ct :w<cr>:!cucumber<cr>
 map <Leader>wc :ChooseWin<cr>
 "" Tagbar plugin mapiranje otvaranja prozora
 nmap <F8> :TagbarToggle<cr>
-"" Mapiranje space dugmeta za otvaranje i zatvaranje folda
+"" Mapping space button to open \ close folds
 nnoremap <space> za
 vnoremap <space> zf
+" Mapping for manual Syntastic syntax check
+nmap <leader>sc :SyntasticCheck<CR>
+" Show\Syntastic error list with ctr+e
+nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 " }}}
 
 " Commands {{{
@@ -525,7 +534,6 @@ autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
 " specify syntax highlighting for specific files
-autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 " Close all folds when opening a new buffer
 autocmd BufRead * setlocal foldmethod=marker
@@ -549,10 +557,26 @@ highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
 highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
-""" Different colorscheme for bash and zsh files
-autocmd FileType sh,zsh colorscheme Tomorrow-Night
-autocmd FileType python colorscheme railscasts
-autocmd FileType css colorscheme molokai
-autocmd FileType php colorscheme jellybeans
-autocmd FileType html colorscheme railscasts
+""" Different colorscheme different files only in terminal vim
+" Check if gui is not running and only then apply different colorschemes
+" for different file types
+if !has("gui_running")
+  autocmd FileType sh,zsh colorscheme Tomorrow-Night
+  autocmd FileType python colorscheme railscasts
+  autocmd FileType css colorscheme molokai
+  autocmd FileType php colorscheme jellybeans
+endif
+"
+" Set buffer to be modifiable (needed to create files in NerdTree)
+autocmd BufWinEnter * setlocal modifiable
+" Toggle Syntastic Error list (show \ hide it)
+function! ToggleErrors()
+    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+         " No location/quickfix list shown, open syntastic error location panel
+         Errors
+    else
+        lclose
+    endif
+endfunction
+"
 " }}}
