@@ -1,10 +1,9 @@
-https://github.com/jiangmiao/auto-pairs.git
+hhttps://github.com/jiangmiao/auto-pairs.git
 https://github.com/bkad/CamelCaseMotion
 https://github.com/kien/ctrlp.vim.git
 https://github.com/Shougo/neocomplete.vim
 https://github.com/scrooloose/nerdtree.git
 https://github.com/spf13/PIV.git
-https://github.com/luochen1990/rainbow
 https://github.com/mtth/scratch.vim
 https://github.com/ervandew/supertab.git
 https://github.com/scrooloose/syntastic.git
@@ -29,4 +28,5 @@ https://github.com/sheerun/vim-polyglot.git
 https://github.com/honza/vim-snippets.git
 https://github.com/jez/vim-superman
 git://github.com/tpope/vim-surround.git
+https://github.com/christoomey/vim-tmux-navigator
 https://github.com/vimwiki/vimwiki.git
