@@ -21,7 +21,7 @@ set nowritebackup
 " No swap file
 set noswapfile
 " Command history
-set history=100
+set history=200
 " Always show cursor
 set ruler
 " Show incomplete commands
@@ -106,13 +106,13 @@ syntax on
 set background=dark
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
-colorscheme atom-dark-256
+colorscheme gruvbox
 "set t_ut=
 "
 " Line number section background color
-highlight LineNr ctermbg=black
+" highlight LineNr ctermbg=black
 " Line number section foreground color
-highlight LineNr ctermfg=gray
+" highlight LineNr ctermfg=gray
 
 "------------------------------------------------------------------------------
 " * Auto-pairs
@@ -472,10 +472,6 @@ sunmap e
 cmap w!! %!sudo tee > /dev/null %
 " File System Explorer (in horizontal split)
 map <leader>. :Sexplore<cr>
-" Buffers
-map <leader>yt :ls<cr>
-" Buffers (runs the delete buffer command on all open buffers)
-map <leader>yd :bufdo bd<cr>
 " Make handling vertical/linear Vim windows easier
 map <leader>w- <C-W>- " decrement height
 map <leader>w+ <C-W>+ " increment height
@@ -502,9 +498,9 @@ map <Leader>cf :w<cr>:!cucumber %<cr>
 map <Leader>cl :w<cr>:exe "!cucumber %" . ":" . line(".")<cr>
 " Run all cucumber feature files
 map <Leader>ct :w<cr>:!cucumber<cr>
-"" Tmux style izbor prozora po brojevima
+"" Tmux style choose window by number
 map <Leader>wc :ChooseWin<cr>
-"" Tagbar plugin mapiranje otvaranja prozora
+"" Tagbar open/close window
 nmap <F8> :TagbarToggle<cr>
 "" Mapping space button to open \ close folds
 nnoremap <space> za
@@ -513,15 +509,32 @@ vnoremap <space> zf
 nmap <leader>sc :SyntasticCheck<CR>
 " Show\Syntastic error list with ctr+e
 nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
+" Mapping for easy command history cycle
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+""" Better mapping for listing vim buffer
+" list open buffers
+map <leader>yt :ls<cr>
+" buffers delete (runs the delete buffer command on all open buffers)
+map <leader>yd :bufdo bd<cr>
+" first last buffer in the list
+nnoremap <silent> [b :bfirst<CR>
+nnoremap <silent> ]b :blast<CR>
+" previous next buffer
+map <F9> :bprevious<CR>
+map <F10> :bnext<CR>
 " }}}
 
 " Commands {{{
-" jump to last cursor
+" Have Vim jump to the last position when
+" reopening a file
 autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
 \ exe "normal g`\"" |
 \ endif
 fun! StripTrailingWhitespace()
+
 " don't strip on these filetypes
 if &ft =~ 'markdown'
 return
@@ -562,9 +575,6 @@ autocmd FilterWritePre * call SetDiffColors()
 " for different file types
 if !has("gui_running")
   autocmd FileType sh,zsh colorscheme Tomorrow-Night
-  autocmd FileType python colorscheme railscasts
-  autocmd FileType css colorscheme molokai
-  autocmd FileType php colorscheme jellybeans
 endif
 "
 " Set buffer to be modifiable (needed to create files in NerdTree)
