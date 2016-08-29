@@ -361,7 +361,13 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 "  A Vim plugin for visually displaying indent levels in code
 " (https://github.com/nathanaelkane/vim-indent-guides)
 "------------------------------------------------------------------------------
-let g:indent_guides_start_level = 2
+" Custom colors
+let g:indent_guides_auto_colors=0
+hi IndentGuidesEven ctermbg=238
+hi IndentGuidesOdd ctermbg=236
+" Start guides from level1
+let g:indent_guides_start_level = 1
+" Size of the line
 let g:indent_guides_guide_size = 1
 "
 "------------------------------------------------------------------------------
@@ -472,6 +478,7 @@ sunmap e
 cmap w!! %!sudo tee > /dev/null %
 " File System Explorer (in horizontal split)
 map <leader>. :Sexplore<cr>
+
 " Make handling vertical/linear Vim windows easier
 map <leader>w- <C-W>- " decrement height
 map <leader>w+ <C-W>+ " increment height
@@ -483,21 +490,6 @@ map <leader>w[ <C-W>= " equalize all windows
 " Make splitting Vim windows easier
 map <leader>; <C-W>s
 map <leader>` <C-W>v
-" Running Tests...
-" See also <https://gist.github.com/8114940>
-" Run currently open RSpec test file
-map <Leader>rf :w<cr>:!rspec % --format nested<cr>
-" Run current RSpec test
-" RSpec is clever enough to work out the test to run if the cursor is on any line within the test
-map <Leader>rl :w<cr>:exe "!rspec %" . ":" . line(".")<cr>
-" Run all RSpec tests
-map <Leader>rt :w<cr>:!rspec --format nested<cr>
-" Run currently open cucumber feature file
-map <Leader>cf :w<cr>:!cucumber %<cr>
-" Run current cucumber scenario
-map <Leader>cl :w<cr>:exe "!cucumber %" . ":" . line(".")<cr>
-" Run all cucumber feature files
-map <Leader>ct :w<cr>:!cucumber<cr>
 "" Tmux style choose window by number
 map <Leader>wc :ChooseWin<cr>
 "" Tagbar open/close window
@@ -513,7 +505,7 @@ nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-""" Better mapping for listing vim buffer
+" Better mapping for listing vim buffer
 " list open buffers
 map <leader>yt :ls<cr>
 " buffers delete (runs the delete buffer command on all open buffers)
@@ -573,9 +565,9 @@ autocmd FilterWritePre * call SetDiffColors()
 """ Different colorscheme different files only in terminal vim
 " Check if gui is not running and only then apply different colorschemes
 " for different file types
-if !has("gui_running")
-  autocmd FileType sh,zsh colorscheme Tomorrow-Night
-endif
+"if !has("gui_running")
+  "autocmd FileType sh,zsh colorscheme Tomorrow-Night
+"endif
 "
 " Set buffer to be modifiable (needed to create files in NerdTree)
 autocmd BufWinEnter * setlocal modifiable
