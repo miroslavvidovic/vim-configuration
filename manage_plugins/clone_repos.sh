@@ -16,7 +16,6 @@
 # -------------------------------------------------------
 # Script:
 
-
 # Input variable is the system path to the text file with the repos.
 input=$1
 # Output directory is the location where the repositories whill be cloned

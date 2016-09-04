@@ -1,13 +1,12 @@
+"------------------------------------------------------------------------------
 " Miroslav Vidović
 "
 " vimrc file
 "
-" -----------------------------------------------------------------------------
-" Settings {{{
+"------------------------------------------------------------------------------
 "
-"------------------------------------------------------------------------------
-" General Settings
-"------------------------------------------------------------------------------
+""" Settings {{{
+"
 " Switch syntax highlighting on, when the terminal has colors
 syntax on
 " Auto-indent code when available
@@ -21,7 +20,7 @@ set nowritebackup
 " No swap file
 set noswapfile
 " Command history
-set history=200
+set history=500
 " Always show cursor
 set ruler
 " Show incomplete commands
@@ -87,9 +86,8 @@ let g:netrw_liststyle=3
 autocmd BufWinEnter * highlight ColorColumn ctermbg=lightgray
 call matchadd('ColorColumn', '\%81v', 100)
 " }}}
-
-" Plugins {{{
 "
+" Plugins {{{
 "------------------------------------------------------------------------------
 " * Pathogen
 "-------------------------
@@ -208,16 +206,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
 " Ack (uses Ag behind the scenes)
 let g:ackprg = 'ag --nogroup --nocolor --column'
-
-"------------------------------------------------------------------------------
-"-----Undo Tree
-nnoremap <F5> :UndotreeToggle<cr>
-"All undo files in the same directory
-if has("persistent_undo")
-    set undodir=~/.undodir/
-    set undofile
-endif
-
+"
 "------------------------------------------------------------------------------
 " * Airline
 "-------------------------
@@ -463,20 +452,8 @@ sunmap b
 sunmap e
 "
 " }}}
-
-" Mappings {{{
-" Notes...
 "
-" :map j gg (j will be mapped to gg)
-" :map Q j (Q will also be mapped to gg, because j will be expanded -> recursive mapping)
-" :noremap W j (W will be mapped to j not to gg, because j will not be expanded -> non recursive)
-"
-" These mappings work in all modes. To have mappings work in only specific
-" modes then denote the mapping with the mode character.
-"
-" e.g.
-" to map something in just NORMAL mode use :nmap or :nnoremap
-" to map something in just VISUAL mode use :vmap or :vnoremap
+""" Mappings {{{
 "
 " Clear the search highlighting with leader l
 nnoremap <silent><leader>l : nohlsearch<CR>
@@ -484,7 +461,6 @@ nnoremap <silent><leader>l : nohlsearch<CR>
 cmap w!! %!sudo tee > /dev/null %
 " File System Explorer (in vertical split)
 map <leader>. :Vexplore<cr>
-
 " Make handling vertical/linear Vim windows easier
 map <leader>w- <C-W>- " decrement height
 map <leader>w+ <C-W>+ " increment height
@@ -510,7 +486,7 @@ nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 " Mapping for easy command history cycle
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-
+"
 " Better mapping for listing vim buffer
 " list open buffers
 map <leader>yt :ls<cr>
@@ -568,13 +544,6 @@ highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
 highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
-""" Different colorscheme different files only in terminal vim
-" Check if gui is not running and only then apply different colorschemes
-" for different file types
-"if !has("gui_running")
-  "autocmd FileType sh,zsh colorscheme Tomorrow-Night
-"endif
-"
 " Set buffer to be modifiable (needed to create files in NerdTree)
 autocmd BufWinEnter * setlocal modifiable
 " Toggle Syntastic Error list (show \ hide it)
