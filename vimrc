@@ -124,7 +124,6 @@ colorscheme gruvbox
 "------------------------------------------------------------------------------
 " Neocomplete
 "------------------------------------------------------------------------------
-let g:neocomplete#enable_at_startup = 1
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
@@ -134,20 +133,24 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
+
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
+
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -161,6 +164,28 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 "------------------------------------------------------------------------------
 " * CtrlP
 "-------------------------
@@ -221,7 +246,9 @@ let g:airline_powerline_fonts = 1
 nmap <silent> <leader>b :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
-"
+" Control the tagbar width
+let g:tagbar_width = 30
+
 "------------------------------------------------------------------------------
 " * Gitgutter
 "-------------------------
@@ -259,7 +286,7 @@ nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 let g:nerdtree_tabs_open_on_console_startup = 0
 " Searching the file system
 map <leader>' :NERDTreeToggle<cr>
-"
+
 "------------------------------------------------------------------------------
 " * Tabular
 "-------------------------
@@ -272,29 +299,11 @@ map <Leader>es :Tabularize /=\zs<cr>
 map <Leader>cs :Tabularize /:\zs<cr>
 "
 "------------------------------------------------------------------------------
-" * Numbers
-"-------------------------
-" Vim plugin for showing relative line numbers
-" (https://github.com/myusuf3/numbers.vim)
-"------------------------------------------------------------------------------
-" Toggle relative numbers on / of
-nnoremap <F3> :NumbersToggle<CR>
-"
-"------------------------------------------------------------------------------
 " * PIV
 "-------------------------
 " Vim PHP integration plugin
 " (https://github.com/spf13/PIV)
 "------------------------------------------------------------------------------
-"
-"------------------------------------------------------------------------------
-" * RainbowParentheses
-"-------------------------
-" Show colored parentheses in vim
-" (https://github.com/luochen1990/rainbow)
-"------------------------------------------------------------------------------
-" Activate the plugin
-let g:rainbow_active = 1
 "
 "------------------------------------------------------------------------------
 " * Scratch
@@ -309,10 +318,11 @@ let g:rainbow_active = 1
 " Vim bookmarks plugin
 " (https://github.com/MattesGroeger/vim-bookmarks)
 "------------------------------------------------------------------------------
-highlight BookmarkSign ctermbg=NONE ctermfg=160
-highlight BookmarkLine ctermbg=187 ctermfg=18
-" let g:bookmark_sign = '♥'
-let g:bookmark_highlight_lines = 1
+"highlight BookmarkSign ctermbg=NONE ctermfg=160
+"highlight BookmarkLine ctermbg=187 ctermfg=18
+"
+" Highlight only the sign not the whole line
+let g:bookmark_highlight_lines = 0
 "
 "------------------------------------------------------------------------------
 " * ChooseWin
@@ -365,16 +375,12 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 let g:indent_guides_auto_colors=0
 hi IndentGuidesEven ctermbg=238
 hi IndentGuidesOdd ctermbg=236
+" Indent guides on startup
+let g:indent_guides_enable_on_vim_startup = 1
 " Start guides from level1
 let g:indent_guides_start_level = 1
 " Size of the line
 let g:indent_guides_guide_size = 1
-"
-"------------------------------------------------------------------------------
-" * Nerdtree tabs
-"-------------------------
-"  NERDTree and tabs together in Vim, painlessly
-" (https://github.com/jistr/vim-nerdtree-tabs)
 "------------------------------------------------------------------------------
 "
 "------------------------------------------------------------------------------
@@ -409,7 +415,6 @@ let g:indent_guides_guide_size = 1
 "------------------------------------------------------------------------------
 " * Syntastic
 "------------------------------------------------------------------------------
-"
 " Different signs for different error types.
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
@@ -456,7 +461,7 @@ map <silent> e <Plug>CamelCaseMotion_e
 sunmap w
 sunmap b
 sunmap e
-
+"
 " }}}
 
 " Mappings {{{
@@ -472,12 +477,13 @@ sunmap e
 " e.g.
 " to map something in just NORMAL mode use :nmap or :nnoremap
 " to map something in just VISUAL mode use :vmap or :vnoremap
-" Clear search buffer
-:nnoremap § :nohlsearch<cr>
+"
+" Clear the search highlighting with leader l
+nnoremap <silent><leader>l : nohlsearch<CR>
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
-" File System Explorer (in horizontal split)
-map <leader>. :Sexplore<cr>
+" File System Explorer (in vertical split)
+map <leader>. :Vexplore<cr>
 
 " Make handling vertical/linear Vim windows easier
 map <leader>w- <C-W>- " decrement height
