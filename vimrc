@@ -1,11 +1,12 @@
 "------------------------------------------------------------------------------
+"
 " Miroslav Vidović
 "
 " vimrc file
 "
 "------------------------------------------------------------------------------
 "
-""" Settings {{{
+" Settings {{{
 "
 " Switch syntax highlighting on, when the terminal has colors
 syntax on
@@ -96,7 +97,7 @@ call matchadd('ColorColumn', '\%81v', 100)
 execute pathogen#infect()
 filetype plugin indent on
 syntax on
-
+"
 "------------------------------------------------------------------------------
 " Theme Settings
 "------------------------------------------------------------------------------
@@ -180,10 +181,7 @@ endif
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+"
 "------------------------------------------------------------------------------
 " * CtrlP
 "-------------------------
@@ -224,7 +222,7 @@ let g:airline_detect_paste=1
 let g:airline#extensions#tabline#enabled = 1
 " Set powerline fonts
 let g:airline_powerline_fonts = 1
-
+"
 "------------------------------------------------------------------------------
 " * Tagbar
 "-------------------------
@@ -237,7 +235,7 @@ nmap <silent> <leader>b :TagbarToggle<CR>
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
 " Control the tagbar width
 let g:tagbar_width = 30
-
+"
 "------------------------------------------------------------------------------
 " * Gitgutter
 "-------------------------
@@ -348,13 +346,6 @@ map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 "
 "------------------------------------------------------------------------------
-" * Fugitive
-"-------------------------
-" Git wrapper so awesome, it should be illegal
-" (https://github.com/tpope/vim-fugitive)
-"------------------------------------------------------------------------------
-"
-"------------------------------------------------------------------------------
 " * Indent Guides
 "-------------------------
 "  A Vim plugin for visually displaying indent levels in code
@@ -365,7 +356,7 @@ let g:indent_guides_auto_colors=0
 hi IndentGuidesEven ctermbg=238
 hi IndentGuidesOdd ctermbg=236
 " Indent guides on startup
-let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_enable_on_vim_startup = 1
 " Start guides from level1
 let g:indent_guides_start_level = 1
 " Size of the line
@@ -381,13 +372,6 @@ let g:indent_guides_guide_size = 1
 "let g:polyglot_disabled = ['css']
 "
 "------------------------------------------------------------------------------
-" * Superman
-"-------------------------
-" Read Unix man pages faster than a speeding bullet!
-" (https://github.com/jez/vim-superman)
-"------------------------------------------------------------------------------
-"
-"------------------------------------------------------------------------------
 " * Surround
 "-------------------------
 " Quoting/parenthesizing made simple
@@ -397,12 +381,13 @@ let g:indent_guides_guide_size = 1
 "------------------------------------------------------------------------------
 " * VimWiki
 "-------------------------
-" Personal wiki for vim
+" - personal wiki for vim
 " (https://github.com/vimwiki/vimwiki)
-"------------------------------------------------------------------------------
-
+"
 "------------------------------------------------------------------------------
 " * Syntastic
+" ------------------------
+"  - syntax checking plugin
 "------------------------------------------------------------------------------
 " Different signs for different error types.
 let g:syntastic_error_symbol = "✗"
@@ -426,6 +411,15 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 " Only passive mode chekcing - only manual syntax checks
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
+" Toggle Syntastic Error list (show \ hide it)
+function! ToggleErrors()
+    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
+         " No location/quickfix list shown, open syntastic error location panel
+         Errors
+    else
+        lclose
+    endif
+endfunction
 "
 "------------------------------------------------------------------------------
 " * Ultisnips
@@ -453,7 +447,7 @@ sunmap e
 "
 " }}}
 "
-""" Mappings {{{
+" Mappings {{{
 "
 " Clear the search highlighting with leader l
 nnoremap <silent><leader>l : nohlsearch<CR>
@@ -466,12 +460,6 @@ map <leader>w- <C-W>- " decrement height
 map <leader>w+ <C-W>+ " increment height
 map <leader>w] <C-W>_ " maximize height
 map <leader>w[ <C-W>= " equalize all windows
-" Handling horizontal Vim windows doesn't appear to be possible.
-" Attempting to map <C-W> < and > didn't work
-" Same with mapping <C-W>|
-" Make splitting Vim windows easier
-map <leader>; <C-W>s
-map <leader>` <C-W>v
 "" Tmux style choose window by number
 map <Leader>wc :ChooseWin<cr>
 "" Tagbar open/close window
@@ -486,7 +474,6 @@ nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 " Mapping for easy command history cycle
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-"
 " Better mapping for listing vim buffer
 " list open buffers
 map <leader>yt :ls<cr>
@@ -501,14 +488,15 @@ map <F10> :bnext<CR>
 " }}}
 
 " Commands {{{
-" Have Vim jump to the last position when
+"
+""" Have Vim jump to the last position when
 " reopening a file
 autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
 \ exe "normal g`\"" |
 \ endif
 fun! StripTrailingWhitespace()
-
+"
 " don't strip on these filetypes
 if &ft =~ 'markdown'
 return
@@ -546,14 +534,5 @@ endfun
 autocmd FilterWritePre * call SetDiffColors()
 " Set buffer to be modifiable (needed to create files in NerdTree)
 autocmd BufWinEnter * setlocal modifiable
-" Toggle Syntastic Error list (show \ hide it)
-function! ToggleErrors()
-    if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
-         " No location/quickfix list shown, open syntastic error location panel
-         Errors
-    else
-        lclose
-    endif
-endfunction
 "
 " }}}
