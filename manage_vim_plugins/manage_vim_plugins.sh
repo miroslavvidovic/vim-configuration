@@ -14,6 +14,8 @@
 # -----------------------------------------------------------------------------
 # Script:
 
+# TODO: Copy repository list to .vim
+
 # New Vim location
 VIM=$HOME/.vim
 
@@ -79,6 +81,12 @@ install_pathogen(){
   curl -LSso $VIM/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 }
 
+# Copy vimrc and gvimrc files from the repository to their destination in $HOME
+copy_vimrc_and_gvimrc(){
+  cp ../gvimrc $HOME/.gvimrc
+  cp ../vimrc $HOME/.vimrc
+}
+
 help(){
   cat << EOF
   Usage: $0 [-h] [-i repo_file] [-u] [-p]
@@ -91,13 +99,14 @@ help(){
     -u      Update installed Vim plugins from their repositories
     -p      Update the plugins list file
     -h      Show this help message
+    -f      Copy .vimrc and .gvimrc files to home
 EOF
 
 
 }
 
 main(){
-  while getopts 'i:uph' flag; do
+  while getopts 'i:upfh' flag; do
     case "${flag}" in
       i)
         echo "Creating directories ..."
@@ -115,6 +124,10 @@ main(){
       p)
         echo "Updating the plugins list"
         get_repo_list
+          ;;
+      f)
+        echo "Copying vimrc and gvimrc files"
+        copy_vimrc_and_gvimrc
           ;;
       h)
         help
