@@ -14,7 +14,9 @@
 # -----------------------------------------------------------------------------
 # Script:
 
-# TODO: Copy repository list to .vim
+# TODO: check and install external packages
+# * clang-format
+# * exuberant-ctags
 
 # New Vim location
 VIM=$HOME/.vim
