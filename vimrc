@@ -5,7 +5,7 @@
 " vimrc file
 "
 "------------------------------------------------------------------------------
-"
+
 " Settings {{{
 "
 " Switch syntax highlighting on, when the terminal has colors
@@ -84,62 +84,54 @@ set showmatch
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
 " Highlight in gray only those characters that are beyond the 80 character margin
-autocmd BufWinEnter * highlight ColorColumn ctermbg=lightgray
+autocmd BufWinEnter * highlight ColorColumn ctermbg=237
 call matchadd('ColorColumn', '\%81v', 100)
-" }}}
 "
+" }}}
+
 " Plugins {{{
-"------------------------------------------------------------------------------
-" * Pathogen
+
 "-------------------------
+" => Pathogen
 " Vim plugin manager
-"------------------------------------------------------------------------------
+"-------------------------
 execute pathogen#infect()
 filetype plugin indent on
 syntax on
 "
-"------------------------------------------------------------------------------
-" Theme Settings
-"------------------------------------------------------------------------------
-"set t_Co=256
-set background=dark
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
-colorscheme gruvbox
-"set t_ut=
-"
-" Line number section background color
-" highlight LineNr ctermbg=black
-" Line number section foreground color
-" highlight LineNr ctermfg=gray
-
-"------------------------------------------------------------------------------
-" * Auto-pairs
+"-------------------------
+" => Auto-pairs
 "-------------------------
 " Vim plugin, insert or delete brackets, parens, quotes in pair
 " (https://github.com/jiangmiao/auto-pairs)
-"------------------------------------------------------------------------------
-
-"------------------------------------------------------------------------------
-" Neocomplete
-"------------------------------------------------------------------------------
+"
+"-------------------------
+" => Super tab
+"-------------------------
+"
+"-------------------------
+" => Neocomplete
+"-------------------------
+"
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
+"
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
+"
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
-
+"
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
@@ -163,9 +155,17 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -181,236 +181,299 @@ endif
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 "
-"------------------------------------------------------------------------------
-" * CtrlP
+"-------------------------
+" => CSV vim
+"-------------------------
+" Plugin for csv files
+" (https://github.com/chrisbra/csv.vim)
+"
+"-------------------------
+" => promptline
+"-------------------------
+" Powerline shell prompt
+" (https://github.com/edkolev/promptline.vim)
+"
+"-------------------------
+" => undo tree
+"-------------------------
+" Visual undo history
+" (https://github.com/mbbill/undotree)
+"
+" Toggle the undo tree with <F3>
+nnoremap <F3> :UndotreeToggle<cr>
+"
+"-------------------------
+" => CtrlP
 "-------------------------
 " Full path fuzzy file, buffer, mru, tag finder for Vim
 " (https://github.com/ctrlpvim/ctrlp.vim)
-"------------------------------------------------------------------------------
+"
 map <leader>t <C-p>
 map <leader>y :CtrlPBuffer<cr>
 let g:ctrlp_show_hidden=1
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_max_height=30
+"
 " CtrlP -> override <C-o> to provide options for how to open files
 let g:ctrlp_arg_map = 1
+"
 " CtrlP -> files matched are ignored when expanding wildcards
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store
+"
 " CtrlP -> use Ag for searching instead of VimScript
 " (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"
 " CtrlP -> directories to ignore when fuzzy finding
 let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
+"
 " Ack (uses Ag behind the scenes)
 let g:ackprg = 'ag --nogroup --nocolor --column'
 "
-"------------------------------------------------------------------------------
-" * Airline
+"-------------------------
+" => Airline
 "-------------------------
 " Status/tab line for vim
 " (https://github.com/vim-airline/vim-airline)
-" * Airline themes
+" => Airline themes
 " (https://github.com/vim-airline/vim-airline-themes)
-"------------------------------------------------------------------------------
+"
 " Set airline theme - vim-airline-themes plugin
 " if left unset auto theme is set according to vim theme
-let g:airline_theme='jellybeans'
+" let g:airline_theme='solarized'
+"
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
+"
 " Show airline for tabs too
 let g:airline#extensions#tabline#enabled = 1
+"
 " Set powerline fonts
 let g:airline_powerline_fonts = 1
 "
 "------------------------------------------------------------------------------
-" * Tagbar
+" => Tagbar
 "-------------------------
 " Vim plugin that displays tags in a window, ordered by scope
 " (https://github.com/majutsushi/tagbar)
-"------------------------------------------------------------------------------
+"
 " Open/close tagbar with \b
 nmap <silent> <leader>b :TagbarToggle<CR>
+"
+" Tagbar open/close window
+nmap <F8> :TagbarToggle<cr>
+"
 " Uncomment to open tagbar automatically whenever possible
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
-" Control the tagbar width
-let g:tagbar_width = 30
 "
-"------------------------------------------------------------------------------
-" * Gitgutter
+" Control the tagbar width
+let g:tagbar_width = 40
+"
+"-------------------------
+" => Gitgutter
 "-------------------------
 " A vim plugin which shows a git diff in gutter(sign column) and stages hunks
 " (https://github.com/airblade/vim-gitgutter)
-"------------------------------------------------------------------------------
+"
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
 let g:gitgutter_sign_column_always = 1
 highlight clear SignColumn
+"
 " In vim-airline, only display "hunks" if the diff is non-zero
 let g:airline#extensions#hunks#non_zero_only = 1
 "
-"------------------------------------------------------------------------------
-" * Tmuxline
+"-------------------------
+" => Tmuxline
 "-------------------------
 " Simple tmux statusline generator with powerline symbols and statusline
 " or airline integration
 " (https://github.com/edkolev/tmuxline.vim)
-"------------------------------------------------------------------------------
+"
 " Separator
 let g:tmuxline_powerline_separators = 1
+"
 " Tmuxline style
 let g:tmuxline_preset = 'powerline'
-
-"------------------------------------------------------------------------------
-" * NERDTree
+"
+"-------------------------
+" => NERDTree
 "-------------------------
 " Tree file explorer for vim
 " (https://github.com/scrooloose/nerdtree)
-"------------------------------------------------------------------------------
-" Open/close NERDTree Tabs with \t
-nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
+"
+" Open/close NERDTree F2
+nmap <F2> :NERDTreeToggle<cr>
+"
+" Open/close NERDTree with '
+map <leader>' :NERDTreeToggle<cr>
+"
 " To have NERDTree always open on startup (set = 1)
 let g:nerdtree_tabs_open_on_console_startup = 0
-" Searching the file system
-map <leader>' :NERDTreeToggle<cr>
-
-"------------------------------------------------------------------------------
-" * Tabular
+"
+"-------------------------
+" => Tabular
 "-------------------------
 " Vim script for text filtering and alignment
 " (https://github.com/godlygeek/tabular)
-"------------------------------------------------------------------------------
+"
+" Custom key mappings
 map <Leader>e :Tabularize /=<cr>
 map <Leader>c :Tabularize /:<cr>
 map <Leader>es :Tabularize /=\zs<cr>
 map <Leader>cs :Tabularize /:\zs<cr>
 "
-"------------------------------------------------------------------------------
-" * PIV
+"-------------------------
+" => PIV
 "-------------------------
 " Vim PHP integration plugin
 " (https://github.com/spf13/PIV)
-"------------------------------------------------------------------------------
 "
-"------------------------------------------------------------------------------
-" * Scratch
+"-------------------------
+" => Scratch
 "-------------------------
 " Unobtrusive scratch window
 " (https://github.com/mtth/scratch.vim)
-"------------------------------------------------------------------------------
 "
-"------------------------------------------------------------------------------
-" * Bookmarks
+"-------------------------
+" => Bookmarks
 "-------------------------
 " Vim bookmarks plugin
 " (https://github.com/MattesGroeger/vim-bookmarks)
-"------------------------------------------------------------------------------
-"highlight BookmarkSign ctermbg=NONE ctermfg=160
-"highlight BookmarkLine ctermbg=187 ctermfg=18
+"
+" highlight BookmarkSign ctermbg=NONE ctermfg=160
+" highlight BookmarkLine ctermbg=187 ctermfg=18
 "
 " Highlight only the sign not the whole line
 let g:bookmark_highlight_lines = 0
 "
-"------------------------------------------------------------------------------
-" * ChooseWin
+"-------------------------
+" => ChooseWin
 "-------------------------
 " Land on window you chose like tmux's 'display-pane'
 " (https://github.com/t9md/vim-choosewin)
-"------------------------------------------------------------------------------
+"
 nmap  -  <Plug>(choosewin)
 let g:choosewin_overlay_enable = 1
 "
-"------------------------------------------------------------------------------
-" * Commentary
+"-------------------------
+" => Commentary
 "-------------------------
 " Comment stuff out
 " (https://github.com/tpope/vim-commentary)
-"------------------------------------------------------------------------------
 "
-"------------------------------------------------------------------------------
-" * Easymotion
+"-------------------------
+" => Easymotion
 "-------------------------
 " Vim motions on speed
 " (https://github.com/easymotion/vim-easymotion)
-"------------------------------------------------------------------------------
+"
 " <Leader>f{char} to move to {char}
 map  <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader>f <Plug>(easymotion-overwin-f)
+"
 " s{char}{char} to move to {char}{char}
 nmap <Leader>s <Plug>(easymotion-overwin-f2)
+"
 " Move to line
 map <Leader>L <Plug>(easymotion-bd-jk)
 map <Leader>L <Plug>(easymotion-overwin-line)
+"
 " Move to word
 map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
 "
-"------------------------------------------------------------------------------
-" * Indent Guides
+"-------------------------
+" => Indent Guides
 "-------------------------
 "  A Vim plugin for visually displaying indent levels in code
 " (https://github.com/nathanaelkane/vim-indent-guides)
-"------------------------------------------------------------------------------
+"
 " Custom colors
 let g:indent_guides_auto_colors=0
 hi IndentGuidesEven ctermbg=238
 hi IndentGuidesOdd ctermbg=236
+"
 " Indent guides on startup
-"let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 1
+"
 " Start guides from level1
 let g:indent_guides_start_level = 1
+"
 " Size of the line
 let g:indent_guides_guide_size = 1
-"------------------------------------------------------------------------------
+" TODO: Fix problm with java indent size
 "
-"------------------------------------------------------------------------------
-" * Polyglot
+"-------------------------
+" => Polyglot
 "-------------------------
 " A solid language pack for Vim
 " (https://github.com/sheerun/vim-polyglot)
-"------------------------------------------------------------------------------
-"let g:polyglot_disabled = ['css']
 "
-"------------------------------------------------------------------------------
-" * Surround
+" let g:polyglot_disabled = ['css']
+"
+"-------------------------
+" => Surround
 "-------------------------
 " Quoting/parenthesizing made simple
 " (https://github.com/tpope/vim-surround)
-"------------------------------------------------------------------------------
 "
-"------------------------------------------------------------------------------
-" * VimWiki
 "-------------------------
-" - personal wiki for vim
+" => VimWiki
+"-------------------------
+" Personal wiki for vim
 " (https://github.com/vimwiki/vimwiki)
 "
-"------------------------------------------------------------------------------
-" * Syntastic
+" Custom paths to wiki, generated html files, css file, html template file
+" custom html template
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+\'path_html': '~/Projekti/wiki_website/',
+\'css_name': 'style.css',
+\ 'template_path': '~/Projekti/wiki_website/templates/',
+\ 'template_default': 'my_template',
+\ 'template_ext': '.tpl'}]
+"
+"-------------------------
+" => Syntastic
 " ------------------------
-"  - syntax checking plugin
-"------------------------------------------------------------------------------
+" Syntax checking plugin
+" https://github.com/scrooloose/syntastic
+"
 " Different signs for different error types.
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
 let g:syntastic_style_error_symbol = "▲"
+"
 " Different colors for different error types.
 highlight SyntasticStyleError ctermbg=none
 highlight SyntasticStyleErrorSign ctermbg=none ctermfg=yellow
+"
 " Statusline information
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+"
 " Do not highlight errors
 let g:syntastic_enable_highlighting = 0
+"
 " Populate the list of errors
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
+"
 " Check on open disabled
 let g:syntastic_check_on_open = 0
+"
 " Check on save disabled
 let g:syntastic_check_on_wq = 0
-" Only passive mode chekcing - only manual syntax checks
+"
+" Only passive mode checking - only manual syntax checks
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
+"
 " Toggle Syntastic Error list (show \ hide it)
 function! ToggleErrors()
     if empty(filter(tabpagebuflist(), 'getbufvar(v:val, "&buftype") is# "quickfix"'))
@@ -421,22 +484,29 @@ function! ToggleErrors()
     endif
 endfunction
 "
-"------------------------------------------------------------------------------
-" * Ultisnips
+" Mapping for manual Syntastic syntax check
+nmap <leader>sc :SyntasticCheck<CR>
+"
+" Show\Syntastic error list with ctr+e
+nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
+"
+"-------------------------
+" => Ultisnips
 "-------------------------
 " The ultimate snippet solution for Vim
 " (https://github.com/SirVer/ultisnips)
-"------------------------------------------------------------------------------
+"
+" Custom key mappings
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "
-"------------------------------------------------------------------------------
-" * CamelCaseMotion
 "-------------------------
+" => CamelCaseMotion
+" ------------------------
 " Provide CamelCase motion through words
 " (https://github.com/bkad/CamelCaseMotion)
-"------------------------------------------------------------------------------
+"
 " Camel Case Motion (for dealing with programming code)
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
@@ -446,50 +516,69 @@ sunmap b
 sunmap e
 "
 " }}}
+
+" Theme {{{
 "
+set background=dark
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+colorscheme gruvbox
+"
+" Line number section background color
+highlight LineNr ctermbg=233
+"
+" Line number section foreground color
+highlight LineNr ctermfg=157
+"
+" }}}
+
 " Mappings {{{
 "
 " Clear the search highlighting with leader l
 nnoremap <silent><leader>l : nohlsearch<CR>
+"
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
+"
 " File System Explorer (in vertical split)
 map <leader>. :Vexplore<cr>
+"
 " Make handling vertical/linear Vim windows easier
 map <leader>w- <C-W>- " decrement height
 map <leader>w+ <C-W>+ " increment height
 map <leader>w] <C-W>_ " maximize height
 map <leader>w[ <C-W>= " equalize all windows
-"" Tmux style choose window by number
+"
+" Tmux style choose window by number
 map <Leader>wc :ChooseWin<cr>
-"" Tagbar open/close window
-nmap <F8> :TagbarToggle<cr>
-"" Mapping space button to open \ close folds
+"
+" Mapping space button to open \ close folds
 nnoremap <space> za
 vnoremap <space> zf
-" Mapping for manual Syntastic syntax check
-nmap <leader>sc :SyntasticCheck<CR>
-" Show\Syntastic error list with ctr+e
-nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
+"
 " Mapping for easy command history cycle
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+"
 " Better mapping for listing vim buffer
 " list open buffers
 map <leader>yt :ls<cr>
-" buffers delete (runs the delete buffer command on all open buffers)
+"
+" Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
-" first last buffer in the list
+"
+" First last buffer in the list
 nnoremap <silent> [b :bfirst<CR>
 nnoremap <silent> ]b :blast<CR>
-" previous next buffer
+"
+" Previous\Next buffer
 map <F9> :bprevious<CR>
 map <F10> :bnext<CR>
 " }}}
 
 " Commands {{{
 "
-""" Have Vim jump to the last position when
+" Have Vim jump to the last position when
 " reopening a file
 autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -497,22 +586,26 @@ autocmd BufReadPost *
 \ endif
 fun! StripTrailingWhitespace()
 "
-" don't strip on these filetypes
+" Don't strip on these filetypes
 if &ft =~ 'markdown'
 return
 endif
 %s/\s\+$//e
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
-" file formats
+"
+" File format settings
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
-" specify syntax highlighting for specific files
+"
+" Specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
+"
 " Close all folds when opening a new buffer
 autocmd BufRead * setlocal foldmethod=marker
 autocmd BufRead * normal zM
+"
 " Reset spelling colours when reading a new buffer
 " This works around an issue where the colorscheme is changed by .local.vimrc
 fun! SetSpellingColors()
@@ -524,7 +617,8 @@ autocmd BufNewFile * call SetSpellingColors()
 autocmd BufRead * call SetSpellingColors()
 autocmd InsertEnter * call SetSpellingColors()
 autocmd InsertLeave * call SetSpellingColors()
-""" Change the colorscheme when diffing
+"
+" Change the colorscheme when diffing
 fun! SetDiffColors()
 highlight DiffAdd cterm=bold ctermfg=white ctermbg=DarkGreen
 highlight DiffDelete cterm=bold ctermfg=white ctermbg=DarkGrey
@@ -532,7 +626,5 @@ highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
 highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
-" Set buffer to be modifiable (needed to create files in NerdTree)
-autocmd BufWinEnter * setlocal modifiable
 "
 " }}}
