@@ -40,6 +40,7 @@ set ignorecase
 set hidden
 " Turn word wrap off
 set nowrap
+set textwidth=0
 " Allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
 " Convert tabs to spaces
@@ -89,25 +90,112 @@ call matchadd('ColorColumn', '\%81v', 100)
 "
 " }}}
 
-" Plugins {{{
+" Mappings {{{
+"
+" TODO: consider <space> as leader
+" Better mapping tor the leader key
+let mapleader = "č"
+"
+" Clear the search highlighting with leader l
+nnoremap <silent><leader>l : nohlsearch<CR>
+"
+" Execute commands from vim and get the result back as text
+" example: write figlet Test in vim and then in normal mode press Q on that
+" line
+noremap Q !!sh<cr>
 
+" Command to use sudo when needed
+cmap w!! %!sudo tee > /dev/null %
+"
+" File System Explorer (in vertical split)
+map <leader>. :Vexplore<cr>
+"
+" Make handling vertical/linear Vim windows easier
+map <leader>w- <C-W>- " decrement height
+map <leader>w+ <C-W>+ " increment height
+map <leader>w] <C-W>_ " maximize height
+map <leader>w[ <C-W>= " equalize all windows
+"
+" Tmux style choose window by number
+map <Leader>wc :ChooseWin<cr>
+"
+" Mapping space button to open \ close folds
+nnoremap <space> za
+vnoremap <space> zf
+"
+" Mapping for easy command history cycle
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+"
+" Better mapping for listing vim buffer
+" list open buffers
+map <leader>yt :ls<cr>
+"
+" Buffers delete (runs the delete buffer command on all open buffers)
+map <leader>yd :bufdo bd<cr>
+"
+" First last buffer in the list
+nnoremap <silent> [b :bfirst<CR>
+nnoremap <silent> ]b :blast<CR>
+"
+" Previous\Next buffer
+map <F9> :bprevious<CR>
+map <F10> :bnext<CR>
+" }}}
+
+" Plugins {{{
+"
 "-------------------------
 " => Pathogen
 " Vim plugin manager
+" ( https://github.com/tpope/vim-pathogen )
 "-------------------------
 execute pathogen#infect()
 filetype plugin indent on
 syntax on
 "
 "-------------------------
-" => Auto-pairs
+" => Ack vim
+" Vim plugin for Ack script
+" ( https://github.com/mileszs/ack.vim)"
 "-------------------------
-" Vim plugin, insert or delete brackets, parens, quotes in pair
-" (https://github.com/jiangmiao/auto-pairs)
+" Don't open the first result automatically. Just show the results.
+  cnoreabbrev Ack Ack!
+  nnoremap <Leader>a :Ack!<Space>
 "
 "-------------------------
-" => Super tab
+" => Auto-pairs
+" Vim plugin, insert or delete brackets, parens, quotes in pair
+" (https://github.com/jiangmiao/auto-pairs)
 "-------------------------
+"
+"-------------------------
+" => CamelCaseMotion
+"-------------------------
+" Provide CamelCase motion through words
+" (https://github.com/bkad/CamelCaseMotion)
+"
+" Camel Case Motion (for dealing with programming code)
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+"
+"-------------------------
+" => Ranger vim
+" Ranger and vim integration
+" ( https://github.com/francoiscabrol/ranger.vim)
+"-------------------------
+" Disable default key mapping
+let g:ranger_map_keys = 0
+"
+" Open selected files in new tab
+let g:ranger_open_new_tab = 1
+"
+" Open ranger
+map <leader>r :Ranger<CR>
 "
 "-------------------------
 " => Neocomplete
@@ -501,19 +589,7 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "
-"-------------------------
-" => CamelCaseMotion
-" ------------------------
-" Provide CamelCase motion through words
-" (https://github.com/bkad/CamelCaseMotion)
-"
-" Camel Case Motion (for dealing with programming code)
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
+
 "
 " }}}
 
@@ -530,50 +606,6 @@ highlight LineNr ctermbg=233
 " Line number section foreground color
 highlight LineNr ctermfg=157
 "
-" }}}
-
-" Mappings {{{
-"
-" Clear the search highlighting with leader l
-nnoremap <silent><leader>l : nohlsearch<CR>
-"
-" Command to use sudo when needed
-cmap w!! %!sudo tee > /dev/null %
-"
-" File System Explorer (in vertical split)
-map <leader>. :Vexplore<cr>
-"
-" Make handling vertical/linear Vim windows easier
-map <leader>w- <C-W>- " decrement height
-map <leader>w+ <C-W>+ " increment height
-map <leader>w] <C-W>_ " maximize height
-map <leader>w[ <C-W>= " equalize all windows
-"
-" Tmux style choose window by number
-map <Leader>wc :ChooseWin<cr>
-"
-" Mapping space button to open \ close folds
-nnoremap <space> za
-vnoremap <space> zf
-"
-" Mapping for easy command history cycle
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-"
-" Better mapping for listing vim buffer
-" list open buffers
-map <leader>yt :ls<cr>
-"
-" Buffers delete (runs the delete buffer command on all open buffers)
-map <leader>yd :bufdo bd<cr>
-"
-" First last buffer in the list
-nnoremap <silent> [b :bfirst<CR>
-nnoremap <silent> ]b :blast<CR>
-"
-" Previous\Next buffer
-map <F9> :bprevious<CR>
-map <F10> :bnext<CR>
 " }}}
 
 " Commands {{{
@@ -627,4 +659,9 @@ highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
 "
-" }}}
+" FIX:
+" Disable splitting long lines on 80 character mark
+" moved here because some plugin overrides the settings from the
+" start of the vimrc file
+set textwidth=0
+" }}
