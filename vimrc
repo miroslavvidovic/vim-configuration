@@ -6,26 +6,36 @@
 "
 "------------------------------------------------------------------------------
 
-" Settings {{{
-"
+" General settings {{{
+
 " Switch syntax highlighting on, when the terminal has colors
 syntax on
+
 " Auto-indent code when available
 filetype indent on
+
 " Use vim, not vi api
 set nocompatible
+
 " No backup files
 set nobackup
+
 " No write backup
 set nowritebackup
+
 " No swap file
 set noswapfile
+
 " Command history
 set history=500
+
 " Always show cursor
 set ruler
+
 " Show incomplete commands
 set showcmd
+
+" Better search options
 " Incremental searching (search as you type)
 set incsearch
 " Highlight search matches
@@ -34,71 +44,120 @@ set hlsearch
 set smartcase
 " Make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
+
 " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162: No write since last change for buffer “a.txt”
 set hidden
+
 " Turn word wrap off
 set nowrap
 set textwidth=0
+
 " Allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
+
 " Convert tabs to spaces
 set expandtab
+
 " Set tab size in spaces (this is for manual indenting)
 set tabstop=4
+
 " The number of spaces inserted for a tab (used for auto indenting)
 set shiftwidth=4
+
 " Turn on line numbers
 set number
+
 " Highlight tailing whitespace
 set list listchars=tab:\ \ ,trail:·
+
 " Get rid of the delay when pressing O (for example)
 " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
 set timeout timeoutlen=1000 ttimeoutlen=100
+
 " Always show status bar
 set laststatus=2
+
 " Set the status line to something useful
-set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
-" Hide the toolbar
-set guioptions-=T
+" set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
 " UTF encoding
 set encoding=utf-8
+
 " Autoload files that have changed outside of vim
 set autoread
+
 " Use system clipboard
 " http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
 set clipboard+=unnamed
+
 " Don't show intro
 set shortmess+=I
+
 " Better splits (new windows appear below and to the right)
 set splitbelow
 set splitright
+
 " Enable the mouse
 " set mouse=a
+"
 " Visual autocomplete for command menu
 set wildmenu
+
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
+
 " highlight a matching [{()}] when cursor is placed on start/end character
 set showmatch
+
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
+
+" Folding settings
+" Use manual folding 
+set foldmethod=manual
+" Disable auto folding
+set nofoldenable
+" Use marker folding in vim and txt files only 
+autocmd FileType vim,txt setlocal foldmethod=marker
+
 " Highlight in gray only those characters that are beyond the 80 character margin
 autocmd BufWinEnter * highlight ColorColumn ctermbg=237
 call matchadd('ColorColumn', '\%81v', 100)
-"
+
+" Change the colorscheme when diffing
+fun! SetDiffColors()
+highlight DiffAdd cterm=bold ctermfg=white ctermbg=DarkGreen
+highlight DiffDelete cterm=bold ctermfg=white ctermbg=DarkGrey
+highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
+highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
+endfun
+autocmd FilterWritePre * call SetDiffColors()
+
+" File format specific settings
+autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 
+autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
+
 " }}}
 
-" Mappings {{{
-"
-" TODO: consider <space> as leader
+" Key Mappings {{{
+
 " Better mapping tor the leader key
 let mapleader = "č"
-"
+
+" Save with control + s
+" (requires stty -ixon in .bashrc)
+" normal mode: save
+nnoremap <c-s> :w<CR>
+" insert mode: escape to normal and save
+inoremap <c-s> <Esc>:w<CR>l
+" visual mode: escape to normal and save
+vnoremap <c-s> <Esc>:w<CR>
+
 " Clear the search highlighting with leader l
 nnoremap <silent><leader>l : nohlsearch<CR>
-"
+
 " Execute commands from vim and get the result back as text
 " example: write figlet Test in vim and then in normal mode press Q on that
 " line
@@ -106,41 +165,42 @@ noremap Q !!sh<cr>
 
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
-"
+
 " File System Explorer (in vertical split)
 map <leader>. :Vexplore<cr>
-"
+
 " Make handling vertical/linear Vim windows easier
 map <leader>w- <C-W>- " decrement height
 map <leader>w+ <C-W>+ " increment height
 map <leader>w] <C-W>_ " maximize height
 map <leader>w[ <C-W>= " equalize all windows
-"
+
 " Tmux style choose window by number
 map <Leader>wc :ChooseWin<cr>
-"
+
 " Mapping space button to open \ close folds
 nnoremap <space> za
 vnoremap <space> zf
-"
+
 " Mapping for easy command history cycle
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-"
+
 " Better mapping for listing vim buffer
 " list open buffers
 map <leader>yt :ls<cr>
-"
+
 " Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
-"
+
 " First last buffer in the list
 nnoremap <silent> [b :bfirst<CR>
 nnoremap <silent> ]b :blast<CR>
-"
+
 " Previous\Next buffer
-map <F9> :bprevious<CR>
-map <F10> :bnext<CR>
+map <left> :bprevious<CR>
+map <right> :bnext<CR>
+
 " }}}
 
 " Plugins {{{
@@ -198,7 +258,7 @@ let g:ranger_open_new_tab = 1
 map <leader>r :Ranger<CR>
 "
 "-------------------------
-" => Neocomplete
+" => Necomplete
 "-------------------------
 "
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
@@ -208,18 +268,17 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-"
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-"
+
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
-"
+
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
@@ -249,11 +308,10 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " AutoComplPop like behavior.
 "let g:neocomplete#enable_auto_select = 1
 
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+" Disable Neocomplete for html filetype beacute it is so slow
+" if has('autocmd')
+"   autocmd FileType html NeoCompleteLock
+"  endif
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -262,17 +320,13 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
+" " Enable heavy omni completion.
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 "
 "-------------------------
 " => CSV vim
@@ -333,7 +387,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 "
 " Set airline theme - vim-airline-themes plugin
 " if left unset auto theme is set according to vim theme
-" let g:airline_theme='solarized'
+let g:airline_theme='jellybeans'
 "
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
@@ -343,6 +397,7 @@ let g:airline#extensions#tabline#enabled = 1
 "
 " Set powerline fonts
 let g:airline_powerline_fonts = 1
+
 "
 "------------------------------------------------------------------------------
 " => Tagbar
@@ -379,15 +434,16 @@ let g:airline#extensions#hunks#non_zero_only = 1
 "-------------------------
 " => Tmuxline
 "-------------------------
-" Simple tmux statusline generator with powerline symbols and statusline
-" or airline integration
-" (https://github.com/edkolev/tmuxline.vim)
-"
-" Separator
-let g:tmuxline_powerline_separators = 1
-"
-" Tmuxline style
-let g:tmuxline_preset = 'powerline'
+" " Simple tmux statusline generator with powerline symbols and statusline
+" " or airline integration
+" " (https://github.com/edkolev/tmuxline.vim)
+" "
+" " Separator
+" let g:tmuxline_powerline_separators = 1
+" "
+" " Tmuxline style
+" "let g:tmuxline_preset = 'powerline'
+" let g:tmuxline_preset = 'full'
 "
 "-------------------------
 " => NERDTree
@@ -483,9 +539,9 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 " (https://github.com/nathanaelkane/vim-indent-guides)
 "
 " Custom colors
-let g:indent_guides_auto_colors=0
-hi IndentGuidesEven ctermbg=238
-hi IndentGuidesOdd ctermbg=236
+" let g:indent_guides_auto_colors=0
+" hi IndentGuidesEven ctermbg=238
+" hi IndentGuidesOdd ctermbg=236
 "
 " Indent guides on startup
 let g:indent_guides_enable_on_vim_startup = 1
@@ -594,74 +650,29 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " }}}
 
 " Theme {{{
-"
+
+" Set the dark theme
 set background=dark
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
+" Gruvbox colorscheme
 colorscheme gruvbox
-"
-" Line number section background color
-highlight LineNr ctermbg=233
-"
-" Line number section foreground color
-highlight LineNr ctermfg=157
-"
+let g:gruvbox_contrast_dark='high'
+
+" Line number section colors
+" Background color
+highlight LineNr ctermbg=236
+" Foreground color
+highlight LineNr ctermfg=133
+
 " }}}
 
-" Commands {{{
-"
-" Have Vim jump to the last position when
+" Uncomment the following to have Vim jump to the last position when
 " reopening a file
-autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") |
-\ exe "normal g`\"" |
-\ endif
-fun! StripTrailingWhitespace()
-"
-" Don't strip on these filetypes
-if &ft =~ 'markdown'
-return
-endif
-%s/\s\+$//e
-endfun
-autocmd BufWritePre * call StripTrailingWhitespace()
-"
-" File format settings
-autocmd Filetype gitcommit setlocal spell textwidth=72
-autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
-autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
-"
-" Specify syntax highlighting for specific files
-autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
-"
-" Close all folds when opening a new buffer
-autocmd BufRead * setlocal foldmethod=marker
-autocmd BufRead * normal zM
-"
-" Reset spelling colours when reading a new buffer
-" This works around an issue where the colorscheme is changed by .local.vimrc
-fun! SetSpellingColors()
-highlight SpellBad cterm=bold ctermfg=white ctermbg=red
-highlight SpellCap cterm=bold ctermfg=red ctermbg=white
-endfun
-autocmd BufWinEnter * call SetSpellingColors()
-autocmd BufNewFile * call SetSpellingColors()
-autocmd BufRead * call SetSpellingColors()
-autocmd InsertEnter * call SetSpellingColors()
-autocmd InsertLeave * call SetSpellingColors()
-"
-" Change the colorscheme when diffing
-fun! SetDiffColors()
-highlight DiffAdd cterm=bold ctermfg=white ctermbg=DarkGreen
-highlight DiffDelete cterm=bold ctermfg=white ctermbg=DarkGrey
-highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
-highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
-endfun
-autocmd FilterWritePre * call SetDiffColors()
-"
+" if has("autocmd")
+"   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" endif
+
 " FIX:
 " Disable splitting long lines on 80 character mark
 " moved here because some plugin overrides the settings from the
 " start of the vimrc file
 set textwidth=0
-" }}
