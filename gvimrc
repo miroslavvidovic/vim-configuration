@@ -12,14 +12,21 @@
 "
 " Colorscheme
 colorscheme gruvbox
+
 " Font
 set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 11
+
+" Disable Gui features
+" Hide the toolbar
+set guioptions-=T
 " Disable left scrollbar
 set guioptions-=L
 set guioptions-=l
 " Disable right scrollbar
 set guioptions-=R
 set guioptions-=r
-" Line length margin
-set colorcolumn=80
 
+" Color for characters over the line length margin
+" different color from the terminal version
+autocmd BufWinEnter * highlight ColorColumn guibg=#3A3A3A
+call matchadd('ColorColumn', '\%81v', 100)
