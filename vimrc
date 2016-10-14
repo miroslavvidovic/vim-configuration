@@ -1,10 +1,3 @@
-"------------------------------------------------------------------------------
-"
-" Miroslav Vidović
-"
-" vimrc file
-"
-"------------------------------------------------------------------------------
 
 " General settings {{{
 
@@ -138,6 +131,17 @@ autocmd FilterWritePre * call SetDiffColors()
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
+
+" Set spell checking colors
+fun! SetSpellingColors()
+highlight SpellBad cterm=bold ctermfg=white ctermbg=red
+highlight SpellCap cterm=bold ctermfg=red ctermbg=white
+endfun
+autocmd BufWinEnter * call SetSpellingColors()
+autocmd BufNewFile * call SetSpellingColors()
+autocmd BufRead * call SetSpellingColors()
+autocmd InsertEnter * call SetSpellingColors()
+autocmd InsertLeave * call SetSpellingColors()
 
 " }}}
 
@@ -676,3 +680,4 @@ highlight LineNr ctermfg=133
 " moved here because some plugin overrides the settings from the
 " start of the vimrc file
 set textwidth=0
+
