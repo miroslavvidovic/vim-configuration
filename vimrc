@@ -1,33 +1,30 @@
-
+"------------------------------------------------------------------------------
+"
+" Miroslav Vidović
+"
+" vimrc file
+"
+"------------------------------------------------------------------------------
 " General settings {{{
-
+"
 " Switch syntax highlighting on, when the terminal has colors
 syntax on
-
 " Auto-indent code when available
 filetype indent on
-
 " Use vim, not vi api
 set nocompatible
-
 " No backup files
 set nobackup
-
 " No write backup
 set nowritebackup
-
 " No swap file
 set noswapfile
-
 " Command history
 set history=500
-
 " Always show cursor
 set ruler
-
 " Show incomplete commands
 set showcmd
-
 " Better search options
 " Incremental searching (search as you type)
 set incsearch
@@ -37,87 +34,58 @@ set hlsearch
 set smartcase
 " Make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
-
 " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " if you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162: No write since last change for buffer “a.txt”
 set hidden
-
 " Turn word wrap off
 set nowrap
 set textwidth=0
-
 " Allow backspace to delete end of line, indent and start of line characters
 set backspace=indent,eol,start
-
 " Convert tabs to spaces
 set expandtab
-
 " Set tab size in spaces (this is for manual indenting)
 set tabstop=4
-
 " The number of spaces inserted for a tab (used for auto indenting)
 set shiftwidth=4
-
 " Turn on line numbers
 set number
-
 " Highlight tailing whitespace
 set list listchars=tab:\ \ ,trail:·
-
 " Get rid of the delay when pressing O (for example)
 " http://stackoverflow.com/questions/2158516/vim-delay-before-o-opens-a-new-line
 set timeout timeoutlen=1000 ttimeoutlen=100
-
 " Always show status bar
 set laststatus=2
-
 " Set the status line to something useful
 " set statusline=%f\ %=L:%l/%L\ %c\ (%p%%)
 " UTF encoding
 set encoding=utf-8
-
 " Autoload files that have changed outside of vim
 set autoread
-
 " Use system clipboard
 " http://stackoverflow.com/questions/8134647/copy-and-paste-in-vim-via-keyboard-between-different-mac-terminals
 set clipboard+=unnamed
-
 " Don't show intro
 set shortmess+=I
-
 " Better splits (new windows appear below and to the right)
 set splitbelow
 set splitright
-
-" Enable the mouse
-" set mouse=a
-"
 " Visual autocomplete for command menu
 set wildmenu
-
 " redraw only when we need to (i.e. don't redraw when executing a macro)
 set lazyredraw
-
-" highlight a matching [{()}] when cursor is placed on start/end character
-set showmatch
-
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 let g:netrw_liststyle=3
-
 " Folding settings
 " Use manual folding 
 set foldmethod=manual
 " Disable auto folding
 set nofoldenable
-" Use marker folding in vim and txt files only 
-autocmd FileType vim,txt setlocal foldmethod=marker
-
 " Highlight in gray only those characters that are beyond the 80 character margin
 autocmd BufWinEnter * highlight ColorColumn ctermbg=237
 call matchadd('ColorColumn', '\%81v', 100)
-
 " Change the colorscheme when diffing
 fun! SetDiffColors()
 highlight DiffAdd cterm=bold ctermfg=white ctermbg=DarkGreen
@@ -126,12 +94,6 @@ highlight DiffChange cterm=bold ctermfg=white ctermbg=DarkBlue
 highlight DiffText cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColors()
-
-" File format specific settings
-autocmd Filetype gitcommit setlocal spell textwidth=72
-autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 
-autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
-
 " Set spell checking colors
 fun! SetSpellingColors()
 highlight SpellBad cterm=bold ctermfg=white ctermbg=red
@@ -142,14 +104,24 @@ autocmd BufNewFile * call SetSpellingColors()
 autocmd BufRead * call SetSpellingColors()
 autocmd InsertEnter * call SetSpellingColors()
 autocmd InsertLeave * call SetSpellingColors()
-
+"
 " }}}
-
+"
+" File specific settings {{{
+autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 
+autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd Filetype python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent
+autocmd Filetype html,css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab 
+autocmd Filetype vim setlocal tabstop=2 softtabstop=2 shiftwidth=2  foldmethod=marker expandtab  
+autocmd FileType txt setlocal foldmethod=marker
+autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
+" }}}
+"
 " Key Mappings {{{
-
+"
 " Better mapping tor the leader key
 let mapleader = "č"
-
 " Save with control + s
 " (requires stty -ixon in .bashrc)
 " normal mode: save
@@ -158,87 +130,58 @@ nnoremap <c-s> :w<CR>
 inoremap <c-s> <Esc>:w<CR>l
 " visual mode: escape to normal and save
 vnoremap <c-s> <Esc>:w<CR>
-
 " Clear the search highlighting with leader l
 nnoremap <silent><leader>l : nohlsearch<CR>
-
 " Execute commands from vim and get the result back as text
 " example: write figlet Test in vim and then in normal mode press Q on that
 " line
 noremap Q !!sh<cr>
-
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
-
-" File System Explorer (in vertical split)
-map <leader>. :Vexplore<cr>
-
-" Make handling vertical/linear Vim windows easier
-map <leader>w- <C-W>- " decrement height
-map <leader>w+ <C-W>+ " increment height
-map <leader>w] <C-W>_ " maximize height
-map <leader>w[ <C-W>= " equalize all windows
-
 " Tmux style choose window by number
 map <Leader>wc :ChooseWin<cr>
-
 " Mapping space button to open \ close folds
 nnoremap <space> za
 vnoremap <space> zf
-
 " Mapping for easy command history cycle
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-
 " Better mapping for listing vim buffer
 " list open buffers
 map <leader>yt :ls<cr>
-
 " Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
-
 " First last buffer in the list
 nnoremap <silent> [b :bfirst<CR>
 nnoremap <silent> ]b :blast<CR>
-
 " Previous\Next buffer
 map <left> :bprevious<CR>
 map <right> :bnext<CR>
-
+"
 " }}}
-
+"
 " Plugins {{{
 "
-"-------------------------
-" => Pathogen
+" => Pathogen {{{
 " Vim plugin manager
 " ( https://github.com/tpope/vim-pathogen )
-"-------------------------
+"
 execute pathogen#infect()
 filetype plugin indent on
 syntax on
-"
-"-------------------------
-" => Ack vim
+"}}}
+" => Ack vim {{{
 " Vim plugin for Ack script
 " ( https://github.com/mileszs/ack.vim)"
-"-------------------------
+"
 " Don't open the first result automatically. Just show the results.
-  cnoreabbrev Ack Ack!
-  nnoremap <Leader>a :Ack!<Space>
-"
-"-------------------------
-" => Auto-pairs
-" Vim plugin, insert or delete brackets, parens, quotes in pair
-" (https://github.com/jiangmiao/auto-pairs)
-"-------------------------
-"
-"-------------------------
-" => CamelCaseMotion
-"-------------------------
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+"}}}
+" => CamelCaseMotion {{{
 " Provide CamelCase motion through words
 " (https://github.com/bkad/CamelCaseMotion)
-"
+" 
 " Camel Case Motion (for dealing with programming code)
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
@@ -246,20 +189,7 @@ map <silent> e <Plug>CamelCaseMotion_e
 sunmap w
 sunmap b
 sunmap e
-"
-"-------------------------
-" => Ranger vim
-" Ranger and vim integration
-" ( https://github.com/francoiscabrol/ranger.vim)
-"-------------------------
-" Disable default key mapping
-let g:ranger_map_keys = 0
-"
-" Open selected files in new tab
-let g:ranger_open_new_tab = 1
-"
-" Open ranger
-map <leader>r :Ranger<CR>
+"}}}
 "
 "-------------------------
 " => Necomplete
@@ -275,6 +205,8 @@ let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
 let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" Max number of suggestions shown in the list for autocomplete
+let g:neocomplete#max_list = 6
 
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
@@ -331,18 +263,6 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-"
-"-------------------------
-" => CSV vim
-"-------------------------
-" Plugin for csv files
-" (https://github.com/chrisbra/csv.vim)
-"
-"-------------------------
-" => promptline
-"-------------------------
-" Powerline shell prompt
-" (https://github.com/edkolev/promptline.vim)
 "
 "-------------------------
 " => undo tree
@@ -436,20 +356,6 @@ highlight clear SignColumn
 let g:airline#extensions#hunks#non_zero_only = 1
 "
 "-------------------------
-" => Tmuxline
-"-------------------------
-" " Simple tmux statusline generator with powerline symbols and statusline
-" " or airline integration
-" " (https://github.com/edkolev/tmuxline.vim)
-" "
-" " Separator
-" let g:tmuxline_powerline_separators = 1
-" "
-" " Tmuxline style
-" "let g:tmuxline_preset = 'powerline'
-" let g:tmuxline_preset = 'full'
-"
-"-------------------------
 " => NERDTree
 "-------------------------
 " Tree file explorer for vim
@@ -475,12 +381,6 @@ map <Leader>e :Tabularize /=<cr>
 map <Leader>c :Tabularize /:<cr>
 map <Leader>es :Tabularize /=\zs<cr>
 map <Leader>cs :Tabularize /:\zs<cr>
-"
-"-------------------------
-" => PIV
-"-------------------------
-" Vim PHP integration plugin
-" (https://github.com/spf13/PIV)
 "
 "-------------------------
 " => Scratch
@@ -558,14 +458,6 @@ let g:indent_guides_guide_size = 1
 " TODO: Fix problm with java indent size
 "
 "-------------------------
-" => Polyglot
-"-------------------------
-" A solid language pack for Vim
-" (https://github.com/sheerun/vim-polyglot)
-"
-" let g:polyglot_disabled = ['css']
-"
-"-------------------------
 " => Surround
 "-------------------------
 " Quoting/parenthesizing made simple
@@ -637,10 +529,9 @@ nmap <leader>sc :SyntasticCheck<CR>
 "
 " Show\Syntastic error list with ctr+e
 nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
-"
-"-------------------------
-" => Ultisnips
-"-------------------------
+
+" => Ultisnips {{{
+" 
 " The ultimate snippet solution for Vim
 " (https://github.com/SirVer/ultisnips)
 "
@@ -649,35 +540,42 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "
-
-"
 " }}}
 
-" Theme {{{
+" => Smooth scroll {{{
+"
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
+" }}}
+
+" }}}
+"
+" Theme {{{
+"
 " Set the dark theme
 set background=dark
 " Gruvbox colorscheme
 colorscheme gruvbox
+" Higher contrast
 let g:gruvbox_contrast_dark='high'
-
 " Line number section colors
 " Background color
 highlight LineNr ctermbg=236
 " Foreground color
 highlight LineNr ctermfg=133
-
 " }}}
 
 " Uncomment the following to have Vim jump to the last position when
 " reopening a file
-" if has("autocmd")
-"   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-" endif
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 " FIX:
 " Disable splitting long lines on 80 character mark
 " moved here because some plugin overrides the settings from the
 " start of the vimrc file
 set textwidth=0
-
