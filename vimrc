@@ -6,6 +6,43 @@
 "
 "------------------------------------------------------------------------------
 
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'mileszs/ack.vim'                                " Ack
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-airline/vim-airline'                        " Airline
+Plug 'vim-airline/vim-airline-themes' 
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'bkad/CamelCaseMotion'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'airblade/vim-gitgutter'
+Plug 'nathanaelkane/vim-indent-guides'                "Indentation guides
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
+Plug 'morhetz/gruvbox'                                "Gruvbox colorscheme
+Plug 'joshdick/onedark.vim'                           "OneDark coloscheme
+Plug 'Shougo/neocomplete.vim'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'sheerun/vim-polyglot'
+Plug 'scrooloose/syntastic'
+Plug 'benmills/vimux'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'   "Snippets
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'vimwiki/vimwiki'                                "Wiki for vim
+
+" Add plugins to &runtimepath
+call plug#end()
+
 " Settings
 " => General settings {{{
 
@@ -25,7 +62,7 @@ set shortmess+=I    " Don't show intro
 " Get rid of the delay when pressing O (for example)
 set timeout timeoutlen=1000 ttimeoutlen=100
 
-set clipboard+=unnamed  " Use system clipboard
+set clipboard=unnamedplus  " Use system clipboard on Linux
 
 " Enable filetype plugin
 filetype plugin on 
@@ -43,8 +80,12 @@ syntax on       " Switch syntax highlighting on
 
 set number      " Turn on line numbers
 
-" Set built-in file system explorer to use layout similar to the NERDTree 
-let g:netrw_liststyle=3
+" Netrw settigns
+let g:netrw_liststyle=3       "Tree view style
+let g:netrw_banner = 0        "Remove the top banner
+let g:netrw_altv = 1
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 25      "Window size
 
 " Automatically set indent of new line
 set autoindent
@@ -132,9 +173,6 @@ noremap Q !!sh<cr>
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
 
-" Tmux style choose window by number
-map <Leader>wc :ChooseWin<cr>
-
 " Mapping space button to open \ close folds
 nnoremap <space> za
 vnoremap <space> zf
@@ -144,8 +182,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " Better mapping for listing vim buffer
-" list open buffers
-map <leader>yt :ls<cr>
+nmap <leader>bb :ls<CR>:buffer<Space>
 
 " Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
@@ -160,6 +197,15 @@ map <right> :bnext<CR>
 
 " Toggle between relative and normal line numbers - function
 nnoremap <leader>nt :call NumberToggle()<cr>
+
+" Use ranger file explorer in vim - functino
+map <Leader>x :call RangerExplorer()<CR>
+
+" Open the definition under curosor in a split tab
+map <leader>vo :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
+
+" Generate tags with dispath in the background
+map <leader>tg :Dispatch! ctags -R *<cr>
 
 " }}}
 " => Functions  {{{
@@ -187,6 +233,15 @@ highlight SpellBad cterm=bold ctermfg=white ctermbg=red
 highlight SpellCap cterm=bold ctermfg=red ctermbg=white
 endfun
 
+" Use ranger file explorer from vim
+function RangerExplorer()
+    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . expand("%:p:h")
+    if filereadable('/tmp/vim_ranger_current_file')
+        exec 'edit ' . system('cat /tmp/vim_ranger_current_file')
+        call system('rm /tmp/vim_ranger_current_file')
+    endif
+    redraw!
+endfun
 " }}}
 " => Autocommands  {{{
 
@@ -220,15 +275,7 @@ autocmd FileType txt setlocal foldmethod=marker
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
 " }}}
 
-" Plugins
-" => Pathogen {{{
-" Vim plugin manager
-" ( https://github.com/tpope/vim-pathogen )
-"
-execute pathogen#infect()
-filetype plugin indent on
-syntax on
-"}}}
+" Plugins configuration
 " => Ack vim {{{
 " Vim plugin for Ack script
 " ( https://github.com/mileszs/ack.vim)"
@@ -247,15 +294,18 @@ nnoremap <Leader>a :Ack!<Space>
 " Set airline theme - vim-airline-themes plugin
 " if left unset auto theme is set according to vim theme
 let g:airline_theme='jellybeans'
-let g:jellybeans_overrides = {
-\    'background': { 'ctermbg': 'none', '256ctermbg': 'none' },
-\}
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
 " Show airline for tabs too
 let g:airline#extensions#tabline#enabled = 1
 " Set powerline fonts
 let g:airline_powerline_fonts = 1
+" Remove the > separator
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
 "}}}
 " => Bookmarks {{{
 "-------------------------
@@ -304,7 +354,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " (https://github.com/easymotion/vim-easymotion)
 
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap s <Plug>(easymotion-overwin-f2)
+nmap ć <Plug>(easymotion-overwin-f2)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
@@ -326,15 +376,17 @@ let g:airline#extensions#hunks#non_zero_only = 1
 "}}}
 " => Indent Guides {{{
 "-------------------------
-"  A Vim plugin for visually displaying indent levels in code
-" (https://github.com/nathanaelkane/vim-indent-guides)
-
 " Indent guides on startup
 let g:indent_guides_enable_on_vim_startup = 1
-" Start guides from level1
-let g:indent_guides_start_level = 1
+let g:indent_guides_auto_colors=0
+" Custom colors
+hi IndentGuidesEven ctermbg=238
+hi IndentGuidesOdd ctermbg=236
+" Start guides from level2
+let g:indent_guides_start_level = 2
 " Size of the line
 let g:indent_guides_guide_size = 1
+" TODO: Fix problem with java indent size
 "}}}
 " => NERDTree {{{
 "-------------------------
@@ -344,7 +396,7 @@ let g:indent_guides_guide_size = 1
 " Open/close NERDTree F2
 nmap <F2> :NERDTreeToggle<cr>
 " Open/close NERDTree with '
-map <leader>t :NERDTreeToggle<cr>
+map <leader>' :NERDTreeToggle<cr>
 " To have NERDTree always open on startup (set = 1)
 let g:nerdtree_tabs_open_on_console_startup = 0
 "}}}
@@ -455,6 +507,12 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "
 " }}}
+" => Vimux {{{
+" Prompt for the command
+map <Leader>vp :VimuxPromptCommand<CR>
+" Run the lat command
+map <Leader>vl :VimuxRunLastCommand<CR>
+" }}} 
 " => Undo tree {{{
 "-------------------------
 " Visual undo history
@@ -484,7 +542,7 @@ map <Leader>cs :Tabularize /:\zs<cr>
 " (https://github.com/majutsushi/tagbar)
 
 " Open/close tagbar with \b
-nmap <silent> <leader>b :TagbarToggle<CR>
+nmap <silent> <leader>t :TagbarToggle<CR>
 
 " Tagbar open/close window
 nmap <F8> :TagbarToggle<cr>
