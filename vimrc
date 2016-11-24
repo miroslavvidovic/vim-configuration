@@ -31,14 +31,14 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/syntastic'
 Plug 'benmills/vimux'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'   "Snippets
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'godlygeek/tabular'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'                              "Tagbar
 Plug 'vimwiki/vimwiki'                                "Wiki for vim
+Plug 'luochen1990/rainbow'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -79,6 +79,7 @@ set noswapfile      " No swap file
 syntax on       " Switch syntax highlighting on
 
 set number      " Turn on line numbers
+" set cursorline  " Highlight the current line - (slow)
 
 " Netrw settigns
 let g:netrw_liststyle=3       "Tree view style
@@ -267,12 +268,8 @@ endif
 " File specific settings 
 autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 
-autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
-autocmd Filetype python setlocal tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent
-autocmd Filetype html,css setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab 
-autocmd Filetype vim setlocal tabstop=2 softtabstop=2 shiftwidth=2  foldmethod=marker expandtab
 autocmd FileType txt setlocal foldmethod=marker
-autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType cucumber,ruby,yaml,zsh setlocal shiftwidth=2 tabstop=2 expandtab
 " }}}
 
 " Plugins configuration
