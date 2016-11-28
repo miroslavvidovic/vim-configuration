@@ -17,7 +17,6 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'chrisbra/vim-diff-enhanced'
 Plug 'airblade/vim-gitgutter'
 Plug 'nathanaelkane/vim-indent-guides'                "Indentation guides
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
@@ -38,7 +37,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'godlygeek/tabular'
 Plug 'majutsushi/tagbar'                              "Tagbar
 Plug 'vimwiki/vimwiki'                                "Wiki for vim
-Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
 
 " Add plugins to &runtimepath
 call plug#end()
