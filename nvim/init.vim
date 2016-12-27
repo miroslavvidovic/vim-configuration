@@ -1,20 +1,26 @@
-" Plugins manager {{{
+"------------------------------------------------------------------------------
+"
+" Miroslav Vidović
+"
+" neovim configuration
+"
+"------------------------------------------------------------------------------
 
-" Load plugins
+" Plugins
 call plug#begin('~/.config/nvim/plugged')
 
-" Ack
-Plug 'mileszs/ack.vim'
-" Auto pairs
-Plug 'jiangmiao/auto-pairs'
-" Camel case motion
-Plug 'bkad/CamelCaseMotion'
+Plug 'mileszs/ack.vim'                    " Ack search
+Plug 'jiangmiao/auto-pairs'               " Auto pairs
+Plug 'vim-airline/vim-airline'            " Airline
+Plug 'MattesGroeger/vim-bookmarks'        " Bookmarks
+Plug 'bkad/CamelCaseMotion'               " Camel case motion
+Plug 'ctrlpvim/ctrlp.vim'                 " Fuzzy finder
+Plug 'easymotion/vim-easymotion'          " Easy motion
+
 " Commentary
 Plug 'tpope/vim-commentary'
 " Tagbar
 Plug 'majutsushi/tagbar'
-" Easy motion
-Plug 'easymotion/vim-easymotion'
 " Gitgutter
 Plug 'airblade/vim-gitgutter'
 " Syntax for various languages
@@ -23,16 +29,10 @@ Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
 " Deoplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Airline
-Plug 'vim-airline/vim-airline'
-" CtrlP
-Plug 'ctrlpvim/ctrlp.vim'
 " NerdTree (load the plugin only on command not on startup)
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 " Surround
 Plug 'tpope/vim-surround'
-" Bookmarks
-Plug 'MattesGroeger/vim-bookmarks'
 " VimTmux Navigator
 Plug 'christoomey/vim-tmux-navigator'
 " Indent Guides
@@ -45,8 +45,6 @@ Plug 'honza/vim-snippets'
 Plug 'neomake/neomake'
 " Add plugins to &runtimepath
 call plug#end()
-
-"}}}
 
 " Settings {{{
 "
@@ -189,8 +187,15 @@ map <right> :bnext<CR>
 "
 " }}}
 
-" Plugins {{{
-
+" Plugins 
+" => Ack vim {{{
+" Vim plugin for Ack script
+" ( https://github.com/mileszs/ack.vim)"
+"
+" Don't open the first result automatically. Just show the results.
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+"}}}
 " Airline {{{
 " Use powerline fonts
 let g:airline_powerline_fonts = 1
@@ -201,13 +206,6 @@ let g:airline#extensions#tabline#enabled = 1
 " Enable disable tagbar integration
 " let g:airline#extensions#tagbar#enabled = 1
 " }}}
-
-" Ack {{{
-" Search recursively and open the quickfix window but don't jump to the first
-" occurence of the pattern just display the results
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
-"}}}
 
 " Autopairs {{{
 " Enable disable auto pairs with leader + p
@@ -303,8 +301,6 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " }}}
 "
-" }}}
-
 " Commands {{{
 "
 " Close all folds when opening a new buffer
