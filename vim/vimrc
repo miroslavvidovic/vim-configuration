@@ -268,12 +268,6 @@ autocmd InsertLeave * call SetSpellingColors()
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-
-" File specific settings 
-autocmd Filetype gitcommit setlocal spell textwidth=72
-autocmd Filetype markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 
-autocmd FileType txt setlocal foldmethod=marker
-autocmd FileType cucumber,ruby,yaml,zsh setlocal shiftwidth=2 tabstop=2 expandtab
 " }}}
 
 " Plugins configuration
