@@ -2,42 +2,44 @@
 "
 " Miroslav Vidović
 "
-" vimrc file
+" vim configuration
 "
 "------------------------------------------------------------------------------
 
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'mileszs/ack.vim'                                " Ack
-Plug 'jiangmiao/auto-pairs'
+Plug 'mileszs/ack.vim'                                " Ack search
+Plug 'jiangmiao/auto-pairs'                           " Auto pairing 
 Plug 'vim-airline/vim-airline'                        " Airline
-Plug 'vim-airline/vim-airline-themes' 
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'bkad/CamelCaseMotion'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'easymotion/vim-easymotion'
-Plug 'airblade/vim-gitgutter'
-Plug 'nathanaelkane/vim-indent-guides'                "Indentation guides
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}
-Plug 'morhetz/gruvbox'                                "Gruvbox colorscheme
-Plug 'joshdick/onedark.vim'                           "OneDark coloscheme
-Plug 'Shougo/neocomplete.vim'
-Plug 'terryma/vim-smooth-scroll'
-Plug 'mhinz/vim-startify'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'scrooloose/syntastic'
-Plug 'benmills/vimux'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'   "Snippets
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-Plug 'godlygeek/tabular'
-Plug 'majutsushi/tagbar'                              "Tagbar
-Plug 'vimwiki/vimwiki'                                "Wiki for vim
-Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
+Plug 'vim-airline/vim-airline-themes'                 " Airline themes
+Plug 'MattesGroeger/vim-bookmarks'                    " Bookmarking code
+Plug 'bkad/CamelCaseMotion'                           " Camel case motion
+Plug 'ctrlpvim/ctrlp.vim'                             " Fuzzy file, buffer finder
+Plug 'easymotion/vim-easymotion'                      " Easy movement
+Plug 'airblade/vim-gitgutter'                         " Git status and changes
+Plug 'nathanaelkane/vim-indent-guides'                " Indentation guides
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'} " File explorer
+Plug 'Shougo/neocomplete.vim'                         " Autocomletion
+Plug 'terryma/vim-smooth-scroll'                      " Smooth scrolling
+Plug 'scrooloose/syntastic'                           " Linter, syntax checker
+Plug 'tpope/vim-commentary'                           " Easy way to comment 
+Plug 'tpope/vim-surround'                             " Surround text
+Plug 'tpope/vim-fugitive'                             " Interact with git
+Plug 'tpope/vim-dispatch'                             " Dispatch and run commands
+Plug 'morhetz/gruvbox'                                " Gruvbox colorscheme
+Plug 'joshdick/onedark.vim'                           " OneDark coloscheme
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' } " Rainbow colored parenthesis
+Plug 'mhinz/vim-startify'                             " Nice startup screen
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'   " Snippets
+Plug 'majutsushi/tagbar'                              " Tagbar
+Plug 'christoomey/vim-tmux-navigator'                 " Navigate between vim and tmux
+Plug 'godlygeek/tabular'                              " Align text
+Plug 'benmills/vimux'                                 " Interact with tmux from vim
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }    " UndoTree
+Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
+Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
+Plug 'vimwiki/vimwiki'                                " Wiki for vim
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -71,6 +73,9 @@ filetype indent on
 set nobackup        " No backup files
 set nowritebackup   " No write backup
 set noswapfile      " No swap file
+
+" Correct colors for terminator terminal
+set t_Co=256
 
 " }}}
 " => User interface settings  {{{
@@ -273,20 +278,11 @@ autocmd FileType cucumber,ruby,yaml,zsh setlocal shiftwidth=2 tabstop=2 expandta
 
 " Plugins configuration
 " => Ack vim {{{
-" Vim plugin for Ack script
-" ( https://github.com/mileszs/ack.vim)"
-"
 " Don't open the first result automatically. Just show the results.
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 "}}}
 " => Airline {{{
-"-------------------------
-" Status/tab line for vim
-" (https://github.com/vim-airline/vim-airline)
-" => Airline themes
-" (https://github.com/vim-airline/vim-airline-themes)
-"
 " Set airline theme - vim-airline-themes plugin
 " if left unset auto theme is set according to vim theme
 let g:airline_theme='jellybeans'
@@ -303,18 +299,15 @@ let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 "}}}
+" => Autopairs {{{
+" Enable disable auto pairs with leader + p
+let g:AutoPairsShortcutToggle = '<leader>p'
+" }}}
 " => Bookmarks {{{
-"-------------------------
-" Vim bookmarks plugin
-" (https://github.com/MattesGroeger/vim-bookmarks)
-"
 " Highlight only the sign not the whole line
 let g:bookmark_highlight_lines = 0
 "}}}
 " => CamelCaseMotion {{{
-" Provide CamelCase motion through words
-" (https://github.com/bkad/CamelCaseMotion)
-" 
 " Camel Case Motion (for dealing with programming code)
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
@@ -324,10 +317,6 @@ sunmap b
 sunmap e
 "}}}
 " => CtrlP {{{
-"-------------------------
-" Full path fuzzy file, buffer, mru, tag finder for Vim
-" (https://github.com/ctrlpvim/ctrlp.vim)
-
 map <leader>y :CtrlPBuffer<cr>
 let g:ctrlp_show_hidden=1
 let g:ctrlp_working_path_mode=0
@@ -345,10 +334,6 @@ let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))
 let g:ackprg = 'ag --nogroup --nocolor --column'
 "}}}
 " => Easymotion {{{
-"-------------------------
-" Vim motions on speed
-" (https://github.com/easymotion/vim-easymotion)
-
 " Need one more keystroke, but on average, it may be more comfortable.
 nmap ć <Plug>(easymotion-overwin-f2)
 " Turn on case insensitive feature
@@ -358,20 +343,14 @@ map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 "}}}
 " => Gitgutter {{{
-"-------------------------
-" A vim plugin which shows a git diff in gutter(sign column) and stages hunks
-" (https://github.com/airblade/vim-gitgutter)
-
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
 let g:gitgutter_sign_column_always = 1
 highlight clear SignColumn
 " In vim-airline, only display "hunks" if the diff is non-zero
 let g:airline#extensions#hunks#non_zero_only = 1
-"
 "}}}
 " => Indent Guides {{{
-"-------------------------
 " Indent guides on startup
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors=0
@@ -382,22 +361,16 @@ hi IndentGuidesOdd ctermbg=236
 let g:indent_guides_start_level = 2
 " Size of the line
 let g:indent_guides_guide_size = 1
-" TODO: Fix problem with java indent size
 "}}}
 " => NERDTree {{{
-"-------------------------
-" Tree file explorer for vim
-" (https://github.com/scrooloose/nerdtree)
-
 " Open/close NERDTree F2
 nmap <F2> :NERDTreeToggle<cr>
 " Open/close NERDTree with '
-map <leader>' :NERDTreeToggle<cr>
+map <leader>n :NERDTreeToggle<cr>
 " To have NERDTree always open on startup (set = 1)
 let g:nerdtree_tabs_open_on_console_startup = 0
 "}}}
 " => Neocomplete {{{
-"-------------------------
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplete.
@@ -409,24 +382,20 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " Max number of suggestions shown in the list for autocomplete
 let g:neocomplete#max_list = 6
-
 " Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
-
 " Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
 " Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
-
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -440,7 +409,6 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -455,10 +423,6 @@ noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 " }}}
 " => Syntastic {{{
-" ------------------------
-" Syntax checking plugin
-" https://github.com/scrooloose/syntastic
-
 " Different colors for different error types.
 highlight SyntasticStyleError ctermbg=none
 highlight SyntasticStyleErrorSign ctermbg=none ctermfg=yellow
@@ -486,34 +450,30 @@ function! ToggleErrors()
         lclose
     endif
 endfunction
-
 " Mapping for manual Syntastic syntax check
 nmap <leader>sc :SyntasticCheck<CR>
-
 " Show\Syntastic error list with ctr+e
 nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 "}}}
 " => Ultisnips {{{
-" The ultimate snippet solution for Vim
-" (https://github.com/SirVer/ultisnips)
-"
 " Custom key mappings
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"
 " }}}
 " => Vimux {{{
+" WindowHeight
+let g:VimuxHeight = "40"
 " Prompt for the command
 map <Leader>vp :VimuxPromptCommand<CR>
+" Close the open pane
+map <Leader>vc :VimuxCloseRunner<CR>
+ " Zoom the tmux runner page
+ map <Leader>vz :VimuxZoomRunner<CR>
 " Run the lat command
 map <Leader>vl :VimuxRunLastCommand<CR>
 " }}} 
 " => Undo tree {{{
-"-------------------------
-" Visual undo history
-" (https://github.com/mbbill/undotree)
-
 if has("persistent_undo")
   set undodir=~/.vim/undodir/
   set undofile
@@ -523,29 +483,18 @@ endif
 nnoremap <F3> :UndotreeToggle<cr>
 "}}}
 " => Tabular {{{
-"-------------------------
-" Vim script for text filtering and alignment
-" (https://github.com/godlygeek/tabular)
-"
 map <Leader>e :Tabularize /=<cr>
 map <Leader>c :Tabularize /:<cr>
 map <Leader>es :Tabularize /=\zs<cr>
 map <Leader>cs :Tabularize /:\zs<cr>
 " }}}
 " => Tagbar {{{
-"-------------------------
-" Vim plugin that displays tags in a window, ordered by scope
-" (https://github.com/majutsushi/tagbar)
-
 " Open/close tagbar with \b
 nmap <silent> <leader>t :TagbarToggle<CR>
-
 " Tagbar open/close window
 nmap <F8> :TagbarToggle<cr>
-
 " Uncomment to open tagbar automatically whenever possible
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
-
 " Control the tagbar width
 let g:tagbar_width = 40
 "}}}
