@@ -40,6 +40,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }    " UndoTree
 Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
 Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
 Plug 'vimwiki/vimwiki'                                " Wiki for vim
+Plug 'ekalinin/Dockerfile.vim'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -199,12 +200,14 @@ nnoremap <silent> ]b :blast<CR>
 " Previous\Next buffer
 map <left> :bprevious<CR>
 map <right> :bnext<CR>
+map <up> :tabn<CR>
+map <down> :tabp<CR>
 
 " Toggle between relative and normal line numbers - function
 nnoremap <leader>nt :call NumberToggle()<cr>
 
-" Use ranger file explorer in vim - functino
-map <Leader>x :call RangerExplorer()<CR>
+" Use ranger file explorer in vim - function
+map <Leader>rx :call RangerExplorer()<CR>
 
 " Open the definition under curosor in a split tab
 map <leader>vo :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
@@ -212,6 +215,9 @@ map <leader>vo :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 " Generate tags with dispath in the background
 map <leader>tg :Dispatch! ctags -R *<cr>
 
+" Close the current window
+map <leader>xw :close<CR>
+map <leader>xb :bd<CR>
 " }}}
 " => Functions  {{{
 
@@ -279,18 +285,15 @@ nnoremap <Leader>a :Ack!<Space>
 " => Airline {{{
 " Set airline theme - vim-airline-themes plugin
 " if left unset auto theme is set according to vim theme
-let g:airline_theme='jellybeans'
+let g:airline_theme='dark'
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
 " Show airline for tabs too
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 1
 " Set powerline fonts
 let g:airline_powerline_fonts = 1
-" Remove the > separator
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 "}}}
 " => Autopairs {{{
@@ -371,9 +374,6 @@ let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 " Max number of suggestions shown in the list for autocomplete
 let g:neocomplete#max_list = 6
 " Define dictionary.
@@ -399,8 +399,15 @@ function! s:my_cr_function()
   "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ neocomplete#start_manual_complete()
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Enable omni completion.
@@ -409,6 +416,28 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php =
+"\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+"let g:neocomplete#sources#omni#input_patterns.c =
+"\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+"let g:neocomplete#sources#omni#input_patterns.cpp =
+"\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+"
+" For smart TAB completion.
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+"        \ <SID>check_back_space() ? "\<TAB>" :
+"        \ neocomplete#start_manual_complete()
+"  function! s:check_back_space() "{{{
+"    let col = col('.') - 1
+"    return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction"}}}
 " }}}
 " => Smooth scroll {{{
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
