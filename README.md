@@ -1,2 +1,2 @@
 # vim-configuration
-Vim and NeoVim editor settings and plugins management
+My personal Vim and Neovim settings
