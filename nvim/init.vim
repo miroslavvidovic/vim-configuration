@@ -77,6 +77,9 @@ set t_Co=256
 " }}}
 " => User interface settings  {{{
 
+" Use gui style colors and fonts (supported only in newer versions)
+set termguicolors
+
 syntax on       " Switch syntax highlighting on
 
 set number      " Turn on line numbers
@@ -385,6 +388,8 @@ noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 " }}}
 " => Neomake {{{
+" Run neomake on every file save
+" autocmd! BufWritePost * Neomake
 " }}}
 " => Ultisnips {{{
 " Custom key mappings
