@@ -285,7 +285,7 @@ nnoremap <Leader>a :Ack!<Space>
 " => Airline {{{
 " Set airline theme - vim-airline-themes plugin
 " if left unset auto theme is set according to vim theme
-let g:airline_theme='dark'
+" let g:airline_theme='dark'
 " Show PASTE if in paste mode
 let g:airline_detect_paste=1
 " Show airline for tabs too
@@ -481,8 +481,8 @@ nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 " => Ultisnips {{{
 " Custom key mappings
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " }}}
 " => Vimux {{{
 " WindowHeight
