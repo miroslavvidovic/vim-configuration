@@ -40,6 +40,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }    " UndoTree
 Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
 Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
 Plug 'vimwiki/vimwiki'                                " Wiki for vim
+Plug 'edkolev/tmuxline.vim'                           " Tmuxline
 Plug 'ekalinin/Dockerfile.vim'
 
 " Add plugins to &runtimepath
@@ -478,6 +479,20 @@ nmap <leader>sc :SyntasticCheck<CR>
 " Show\Syntastic error list with ctr+e
 nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 "}}}
+" => Tmuxline {{{
+" Use powerline symbols
+let g:tmuxline_powerline_separators = 1
+" Status line settings
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '',
+      \'c'    : '',
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
+      \'x'    : '',
+      \'y'    : '',
+      \'z'    : ['#(whoami)', '#(uptime | cut -d " " -f 5 | tr -d ,)','#H']}
+" }}}
 " => Ultisnips {{{
 " Custom key mappings
 let g:UltiSnipsExpandTrigger="<c-j>"
