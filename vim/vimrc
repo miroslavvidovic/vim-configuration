@@ -491,7 +491,7 @@ let g:tmuxline_preset = {
       \'cwin' : '#I #W',
       \'x'    : '',
       \'y'    : '',
-      \'z'    : ['#(whoami)', '#(uptime | cut -d " " -f 5 | tr -d ,)','#H']}
+      \'z'    : ['#(whoami)', '#(uptime | cut -d " " -f 4,5 | tr -d ,)','#H']}
 " }}}
 " => Ultisnips {{{
 " Custom key mappings
