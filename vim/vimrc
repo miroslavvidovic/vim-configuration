@@ -219,7 +219,11 @@ map <leader>tg :Dispatch! ctags -R *<cr>
 " Close the current window
 map <leader>xw :close<CR>
 map <leader>xb :bd<CR>
+
+" Search zeal with filetype:word_under_cursor
+nnoremap gz : call OpenInZeal()<CR>
 " }}}
+
 " => Functions  {{{
 
 "Toggle between relative and normal line numbers
@@ -253,6 +257,24 @@ function RangerExplorer()
         call system('rm /tmp/vim_ranger_current_file')
     endif
     redraw!
+endfun
+
+" Search the term under the cursor in zeal
+function OpenInZeal()
+  let type = &filetype
+  if type == "sh"
+    let type = "bash"
+  elseif type == "scss"
+    let type = "sass"
+  endif
+  exec "silent !zeal " . type . ":" . expand("<cword>") . "&"
+  redraw!
+endfun
+
+" Open the current file in emacs
+function OpenInEmacs()
+  exec "silent !emacsclient -c &> /dev/null 2>&1 " . expand("%:p") . "&"
+  redraw!
 endfun
 " }}}
 " => Autocommands  {{{
@@ -510,6 +532,8 @@ map <Leader>vc :VimuxCloseRunner<CR>
  map <Leader>vz :VimuxZoomRunner<CR>
 " Run the lat command
 map <Leader>vl :VimuxRunLastCommand<CR>
+" Run tig
+map <Leader>vt :VimuxRunCommand("tig")<CR>
 " }}} 
 " => Undo tree {{{
 if has("persistent_undo")
