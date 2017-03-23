@@ -199,8 +199,8 @@ nnoremap <silent> [b :bfirst<CR>
 nnoremap <silent> ]b :blast<CR>
 
 " Previous\Next buffer
-map <left> :bprevious<CR>
-map <right> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+nnoremap <Tab> :bnext<CR>
 map <up> :tabn<CR>
 map <down> :tabp<CR>
 
