@@ -41,6 +41,8 @@ Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support
 Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
 Plug 'vimwiki/vimwiki'                                " Wiki for vim
 Plug 'edkolev/tmuxline.vim'                           " Tmuxline
+Plug 'pelodelfuego/vim-swoop'                         " Emacs swiper clone
+Plug 'maxbrunsfeld/vim-yankstack'                     " Manage the yankstack
 Plug 'ekalinin/Dockerfile.vim'
 
 " Add plugins to &runtimepath
@@ -222,6 +224,9 @@ map <leader>xb :bd<CR>
 
 " Search zeal with filetype:word_under_cursor
 nnoremap gz : call OpenInZeal()<CR>
+
+" ROT13 the whole buffer
+map <leader>13 ggVGg?
 " }}}
 
 " => Functions  {{{
@@ -276,6 +281,14 @@ function OpenInEmacs()
   exec "silent !emacsclient -c &> /dev/null 2>&1 " . expand("%:p") . "&"
   redraw!
 endfun
+
+" Trim the trailing whitespaces
+function TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
 " }}}
 " => Autocommands  {{{
 
@@ -337,7 +350,6 @@ sunmap b
 sunmap e
 "}}}
 " => CtrlP {{{
-map <leader>y :CtrlPBuffer<cr>
 let g:ctrlp_show_hidden=1
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_max_height=30
@@ -564,3 +576,7 @@ nmap <F8> :TagbarToggle<cr>
 " Control the tagbar width
 let g:tagbar_width = 40
 "}}}
+" => Yankstack {{{
+nmap <c-y> <Plug>yankstack_substitute_older_paste
+nmap <C-Y> <Plug>yankstack_substitute_newer_paste
+" }}}
