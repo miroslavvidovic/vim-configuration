@@ -501,6 +501,10 @@ nmap <leader>sc :SyntasticCheck<CR>
 " Show\Syntastic error list with ctr+e
 nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 "}}}
+" => Swoop {{{
+" call swoop
+map <leader>ss :Swoop<CR>
+" }}}
 " => Tmuxline {{{
 " Use powerline symbols
 let g:tmuxline_powerline_separators = 1
