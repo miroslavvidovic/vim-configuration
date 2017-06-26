@@ -37,6 +37,7 @@ Plug 'godlygeek/tabular'                                      " Align text
 Plug 'benmills/vimux'                                         " Interact with tmux from vim
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }            " UndoTree
 Plug 'vim-utils/vim-man', { 'on': 'Man' }                     " Read man files in vim
+Plug 'metakirby5/codi.vim'                                    " Programmers scratchpad
 Plug 'editorconfig/editorconfig-vim'                          " Editorconfig support 
 
 " Add plugins to &runtimepath
