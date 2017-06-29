@@ -42,7 +42,6 @@ Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
 Plug 'vimwiki/vimwiki'                                " Wiki for vim
 Plug 'edkolev/tmuxline.vim'                           " Tmuxline
 Plug 'pelodelfuego/vim-swoop'                         " Emacs swiper clone
-Plug 'maxbrunsfeld/vim-yankstack'                     " Manage the yankstack
 Plug 'ekalinin/Dockerfile.vim'
 
 " Add plugins to &runtimepath
@@ -576,7 +575,3 @@ nmap <F8> :TagbarToggle<cr>
 " Control the tagbar width
 let g:tagbar_width = 40
 "}}}
-" => Yankstack {{{
-nmap <c-y> <Plug>yankstack_substitute_older_paste
-nmap <C-Y> <Plug>yankstack_substitute_newer_paste
-" }}}
