@@ -20,7 +20,7 @@ Plug 'easymotion/vim-easymotion'                      " Easy movement
 Plug 'airblade/vim-gitgutter'                         " Git status and changes
 Plug 'nathanaelkane/vim-indent-guides'                " Indentation guides
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'} " File explorer
-Plug 'Shougo/neocomplete.vim'                         " Autocomletion
+Plug 'Shougo/neocomplete.vim'                         " Autocompletion
 Plug 'terryma/vim-smooth-scroll'                      " Smooth scrolling
 Plug 'scrooloose/syntastic'                           " Linter, syntax checker
 Plug 'tpope/vim-commentary'                           " Easy way to comment 
@@ -28,7 +28,6 @@ Plug 'tpope/vim-surround'                             " Surround text
 Plug 'tpope/vim-fugitive'                             " Interact with git
 Plug 'tpope/vim-dispatch'                             " Dispatch and run commands
 Plug 'morhetz/gruvbox'                                " Gruvbox colorscheme
-Plug 'joshdick/onedark.vim'                           " OneDark coloscheme
 Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' } " Rainbow colored parenthesis
 Plug 'mhinz/vim-startify'                             " Nice startup screen
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'   " Snippets
@@ -37,12 +36,17 @@ Plug 'christoomey/vim-tmux-navigator'                 " Navigate between vim and
 Plug 'godlygeek/tabular'                              " Align text
 Plug 'benmills/vimux'                                 " Interact with tmux from vim
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }    " UndoTree
-Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
 Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
 Plug 'vimwiki/vimwiki'                                " Wiki for vim
-Plug 'edkolev/tmuxline.vim'                           " Tmuxline
 Plug 'pelodelfuego/vim-swoop'                         " Emacs swiper clone
+Plug 'pangloss/vim-javascript'                        " Javascript plugin
+Plug 'rakr/vim-one'                                   " Atom inspired colorscheme
+Plug 'junegunn/fzf.vim'                               " Fuzzy finder fzf
+Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ekalinin/Dockerfile.vim'
+Plug 'janko-m/vim-test'
+Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -515,20 +519,6 @@ nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
 " => Swoop {{{
 " call swoop
 map <leader>ss :Swoop<CR>
-" }}}
-" => Tmuxline {{{
-" Use powerline symbols
-let g:tmuxline_powerline_separators = 1
-" Status line settings
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '',
-      \'c'    : '',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : '',
-      \'y'    : '',
-      \'z'    : ['#(whoami)', '#(uptime | cut -d " " -f 4,5 | tr -d ,)','#H']}
 " }}}
 " => Ultisnips {{{
 " Custom key mappings
