@@ -186,6 +186,9 @@ noremap Q !!sh<cr>
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
 
+" Change directory to the curently edited file
+nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+
 " Mapping space button to open \ close folds
 nnoremap <space> za
 vnoremap <space> zf
