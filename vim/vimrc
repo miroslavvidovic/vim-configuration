@@ -20,7 +20,7 @@ Plug 'easymotion/vim-easymotion'                      " Easy movement
 Plug 'airblade/vim-gitgutter'                         " Git status and changes
 Plug 'nathanaelkane/vim-indent-guides'                " Indentation guides
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'} " File explorer
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } "Autocomplete plugin
 Plug 'terryma/vim-smooth-scroll'                      " Smooth scrolling
 Plug 'scrooloose/syntastic'                           " Linter, syntax checker
 Plug 'tpope/vim-commentary'                           " Easy way to comment 
@@ -198,7 +198,8 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " Better mapping for listing vim buffer
-nmap <leader>bb :ls<CR>:buffer<Space>
+" nmap <leader>bb :ls<CR>:buffer<Space>
+map <leader>b :CtrlPBuffer<CR>
 
 " Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
@@ -302,6 +303,12 @@ function TrimWhitespace()
     call winrestview(l:save)
 endfun
 
+" Run a ptypthon repl
+function Ptpython()
+  let g:VimuxOrientation = "h"
+  call VimuxRunCommand("ptpython --vi")
+endfun
+
 " }}}
 " => Autocommands  {{{
 
@@ -327,9 +334,12 @@ endif
 
 " Plugins configuration
 " => Ack vim {{{
+" Make ack use dispatch plugin to run searches in the background
+let g:ack_use_dispatch=1
 " Don't open the first result automatically. Just show the results.
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
+nnoremap <c-a> :Ack<CR>
 "}}}
 " => Airline {{{
 " Set airline theme - vim-airline-themes plugin
@@ -352,6 +362,8 @@ let g:AutoPairsShortcutToggle = '<leader>p'
 " => Bookmarks {{{
 " Highlight only the sign not the whole line
 let g:bookmark_highlight_lines = 0
+" Disable ctrlp integration
+let g:bookmark_disable_ctrlp = 1
 "}}}
 " => CamelCaseMotion {{{
 " Camel Case Motion (for dealing with programming code)
@@ -407,10 +419,8 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 "}}}
 " => NERDTree {{{
-" Open/close NERDTree F2
-nmap <F2> :NERDTreeToggle<cr>
-" Open/close NERDTree with '
-map <leader>n :NERDTreeToggle<cr>
+" Open/close NERDTree
+map <leader>n :NERDTreeToggle %<cr>
 " To have NERDTree always open on startup (set = 1)
 let g:nerdtree_tabs_open_on_console_startup = 0
 "}}}
