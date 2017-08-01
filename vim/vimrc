@@ -48,6 +48,8 @@ Plug 'skywind3000/quickmenu.vim'                      " Customizable quick menu
 Plug 'ludovicchabant/vim-gutentags'                   " Generate your tags automatically
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'elzr/vim-json', { 'for': 'json' }
 
 " Add plugins to &runtimepath
 call plug#end()
