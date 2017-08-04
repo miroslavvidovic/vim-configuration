@@ -11,7 +11,8 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'mileszs/ack.vim'                                        " Ack search
 Plug 'jiangmiao/auto-pairs'                                   " Auto pairs
-Plug 'vim-airline/vim-airline'                                " Airline
+Plug 'itchyny/lightline.vim'                                  " Light statusline
+Plug 'ap/vim-buftabline'                                      " Bufferline
 Plug 'MattesGroeger/vim-bookmarks'                            " Bookmarks
 Plug 'bkad/CamelCaseMotion'                                   " Camel case motion
 Plug 'ctrlpvim/ctrlp.vim'                                     " Fuzzy finder
@@ -37,8 +38,15 @@ Plug 'godlygeek/tabular'                                      " Align text
 Plug 'benmills/vimux'                                         " Interact with tmux from vim
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }            " UndoTree
 Plug 'vim-utils/vim-man', { 'on': 'Man' }                     " Read man files in vim
-Plug 'metakirby5/codi.vim'                                    " Programmers scratchpad
+Plug 'vimwiki/vimwiki'                                        " Wiki for vim
+Plug 'rakr/vim-one'                                           " Atom inspired colorscheme
 Plug 'editorconfig/editorconfig-vim'                          " Editorconfig support 
+Plug 'junegunn/fzf.vim'                                       " Fuzzy finder fzf
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }                     " Json plugin
+Plug 'elzr/vim-json', { 'for': 'json' }                       " Csv plugin
+Plug 'ludovicchabant/vim-gutentags'                           " Generate your tags automatically
+Plug 'metakirby5/codi.vim'                                    " Programmers scratchpad
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -160,6 +168,12 @@ highlight LineNr ctermfg=133
 " Better mapping tor the leader key
 let mapleader = "č"
 
+" Disable annoying F1 help screen
+" if you use vim in the terminal remember to
+" disable F1 shortcut in your terminal app
+nmap <F1> :echo<CR>
+imap <F1> <C-o>:echo<CR>
+
 " Save with control + s
 " (requires stty -ixon in .bashrc)
 " normal mode: save
@@ -169,7 +183,7 @@ inoremap <c-s> <Esc>:w<CR>l
 " visual mode: escape to normal and save
 vnoremap <c-s> <Esc>:w<CR>
 " Clear the search highlighting with leader l
-nnoremap <silent><leader>l : nohlsearch<CR>
+nnoremap <silent><leader>cl : nohlsearch<CR>
 
 " Execute commands from vim and get the result back as text
 " example: write figlet Test in vim and then in normal mode press Q on that
@@ -178,6 +192,9 @@ noremap Q !!sh<cr>
 
 " Command to use sudo when needed
 cmap w!! %!sudo tee > /dev/null %
+
+" Change directory to the curently edited file
+nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
 
 " Mapping space button to open \ close folds
 nnoremap <space> za
@@ -188,7 +205,8 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " Better mapping for listing vim buffer
-nmap <leader>bb :ls<CR>:buffer<Space>
+" nmap <leader>bb :ls<CR>:buffer<Space>
+map <leader>b :CtrlPBuffer<CR>
 
 " Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
@@ -198,21 +216,33 @@ nnoremap <silent> [b :bfirst<CR>
 nnoremap <silent> ]b :blast<CR>
 
 " Previous\Next buffer
-map <left> :bprevious<CR>
-map <right> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+nnoremap <Tab> :bnext<CR>
+
+map <up> :tabn<CR>
+map <down> :tabp<CR>
 
 " Toggle between relative and normal line numbers - function
-nnoremap <leader>nt :call NumberToggle()<cr>
+nnoremap š :call NumberToggle()<cr>
 
-" Use ranger file explorer in vim - functino
-map <Leader>x :call RangerExplorer()<CR>
+" Use ranger file explorer in vim - function
+map <Leader>rx :call RangerExplorer()<CR>
 
-" Open the definition under curosor in a split tab
+" Tags 
+" Open the definition under cursor in a split tab
 map <leader>vo :vsp <CR>:exec("tag ".expand("<cword>"))<CR> 
+" Open the definition under cursor (the same as C+] but easier to type)
+map <leader>to :exec("tag ".expand("<cword>"))<CR> 
 
-" Generate tags with dispath in the background
-map <leader>tg :Dispatch! ctags -R *<cr>
+" Close the current window
+map <leader>xw :close<CR>
+map <leader>xb :bd<CR>
 
+" Search zeal with filetype:word_under_cursor
+nnoremap gz : call OpenInZeal()<CR>
+
+" ROT13 the whole buffer
+map <leader>13 ggVGg?
 " }}}
 " => Functions  {{{
 
@@ -283,23 +313,6 @@ autocmd FileType cucumber,ruby,yaml,zsh setlocal shiftwidth=2 tabstop=2 expandta
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 "}}}
-" => Airline {{{
-" Set airline theme - vim-airline-themes plugin
-" if left unset auto theme is set according to vim theme
-" let g:airline_theme='jellybeans'
-" Show PASTE if in paste mode
-let g:airline_detect_paste=1
-" Show airline for tabs too
-let g:airline#extensions#tabline#enabled = 1
-" Set powerline fonts
-let g:airline_powerline_fonts = 1
-" Remove the > separator
-" let g:airline_left_sep=''
-" let g:airline_right_sep=''
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-" }}}
 " => Autopairs {{{
 " Enable disable auto pairs with leader + p
 let g:AutoPairsShortcutToggle = '<leader>p'
