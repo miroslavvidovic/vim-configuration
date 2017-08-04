@@ -38,18 +38,18 @@ Plug 'benmills/vimux'                                 " Interact with tmux from 
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }    " UndoTree
 Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
 Plug 'vimwiki/vimwiki'                                " Wiki for vim
-Plug 'pelodelfuego/vim-swoop'                         " Emacs swiper clone
-Plug 'pangloss/vim-javascript'                        " Javascript plugin
 Plug 'rakr/vim-one'                                   " Atom inspired colorscheme
 Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
 Plug 'junegunn/fzf.vim'                               " Fuzzy finder fzf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
-Plug 'skywind3000/quickmenu.vim'                      " Customizable quick menu
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }             " Json plugin
+Plug 'elzr/vim-json', { 'for': 'json' }               " Csv plugin
 Plug 'ludovicchabant/vim-gutentags'                   " Generate your tags automatically
+Plug 'pelodelfuego/vim-swoop'                         " Emacs swiper clone
+Plug 'pangloss/vim-javascript'                        " Javascript plugin
+Plug 'skywind3000/quickmenu.vim'                      " Customizable quick menu
 Plug 'janko-m/vim-test'
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }
-Plug 'elzr/vim-json', { 'for': 'json' }
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -169,6 +169,12 @@ highlight LineNr ctermfg=133
 " Better mapping tor the leader key
 let mapleader = "č"
 
+" Disable annoying F1 help screen
+" if you use vim in the terminal remember to
+" disable F1 shortcut in your terminal app
+nmap <F1> :echo<CR>
+imap <F1> <C-o>:echo<CR>
+
 " Save with control + s
 " (requires stty -ixon in .bashrc)
 " normal mode: save
@@ -213,6 +219,7 @@ nnoremap <silent> ]b :blast<CR>
 " Previous\Next buffer
 nnoremap <S-Tab> :bprevious<CR>
 nnoremap <Tab> :bnext<CR>
+
 map <up> :tabn<CR>
 map <down> :tabp<CR>
 
@@ -341,7 +348,7 @@ let g:ack_use_dispatch=1
 " Don't open the first result automatically. Just show the results.
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
-nnoremap <c-a> :Ack<CR>
+nnoremap <Leader>A :Ack<CR>
 "}}}
 " => Airline {{{
 " Set airline theme - vim-airline-themes plugin
