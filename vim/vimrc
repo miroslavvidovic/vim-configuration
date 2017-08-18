@@ -87,6 +87,9 @@ set noswapfile      " No swap file
 " Correct colors for terminator terminal
 set t_Co=256
 
+" Enable the mouse
+" currently using it only as a fast way to resize splits
+set mouse=n
 " }}}
 " => User interface settings  {{{
 
@@ -476,6 +479,11 @@ endfunction
 nmap <leader>sc :SyntasticCheck<CR>
 " Show\Syntastic error list with ctr+e
 nnoremap <C-e> :<C-u>call ToggleErrors()<CR>
+" Perl
+let g:syntastic_enable_perl_checker = 1
+" Use perl to check perl syntax and podchecker to check pod documentation
+" syntax
+let g:syntastic_perl_checkers = ['perl', 'podchecker']
 "}}}
 " => Swoop {{{
 " Disable default key mappings
