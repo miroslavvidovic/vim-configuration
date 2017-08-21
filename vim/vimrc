@@ -205,10 +205,6 @@ vnoremap <space> zf
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
-" Better mapping for listing vim buffer
-" nmap <leader>bb :ls<CR>:buffer<Space>
-map <leader>b :CtrlPBuffer<CR>
-
 " Buffers delete (runs the delete buffer command on all open buffers)
 map <leader>yd :bufdo bd<cr>
 
@@ -363,6 +359,8 @@ let g:airline#extensions#tabline#show_tabs = 1
 " Set powerline fonts
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
+" Airline theme
+let g:airline_theme='jellybeans'
 "}}}
 " => Autopairs {{{
 " Enable disable auto pairs with leader + p
@@ -398,6 +396,8 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$'
 " Ack (uses Ag behind the scenes)
 let g:ackprg = 'ag --nogroup --nocolor --column'
+" Better mapping for listing vim buffer
+map <leader>bb :CtrlPBuffer<CR>
 "}}}
 " => Easymotion {{{
 " Need one more keystroke, but on average, it may be more comfortable.
@@ -433,11 +433,6 @@ map <leader>n :NERDTreeToggle %<cr>
 " To have NERDTree always open on startup (set = 1)
 let g:nerdtree_tabs_open_on_console_startup = 0
 "}}}
-" => Quick Menu {{{
-" enable cursorline (L) and cmdline help (H)
-let g:quickmenu_options = "HL"
-noremap <silent><F12> :call quickmenu#toggle(0)<cr>
-" }}}
 " => Smooth scroll {{{
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
