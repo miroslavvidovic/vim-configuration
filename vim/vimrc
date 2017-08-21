@@ -9,47 +9,44 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'mileszs/ack.vim'                                " Ack search
-Plug 'jiangmiao/auto-pairs'                           " Auto pairing 
-Plug 'vim-airline/vim-airline'                        " Airline
-Plug 'vim-airline/vim-airline-themes'                 " Airline themes
-Plug 'MattesGroeger/vim-bookmarks'                    " Bookmarking code
-Plug 'bkad/CamelCaseMotion'                           " Camel case motion
-Plug 'ctrlpvim/ctrlp.vim'                             " Fuzzy file, buffer finder
-Plug 'easymotion/vim-easymotion'                      " Easy movement
-Plug 'airblade/vim-gitgutter'                         " Git status and changes
-Plug 'nathanaelkane/vim-indent-guides'                " Indentation guides
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'} " File explorer
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' } "Autocomplete plugin
-Plug 'terryma/vim-smooth-scroll'                      " Smooth scrolling
-Plug 'scrooloose/syntastic'                           " Linter, syntax checker
-Plug 'tpope/vim-commentary'                           " Easy way to comment 
-Plug 'tpope/vim-surround'                             " Surround text
-Plug 'tpope/vim-fugitive'                             " Interact with git
-Plug 'tpope/vim-dispatch'                             " Dispatch and run commands
-Plug 'morhetz/gruvbox'                                " Gruvbox colorscheme
-Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' } " Rainbow colored parenthesis
-Plug 'mhinz/vim-startify'                             " Nice startup screen
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'   " Snippets
-Plug 'majutsushi/tagbar'                              " Tagbar
-Plug 'christoomey/vim-tmux-navigator'                 " Navigate between vim and tmux
-Plug 'godlygeek/tabular'                              " Align text
-Plug 'benmills/vimux'                                 " Interact with tmux from vim
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }    " UndoTree
-Plug 'vim-utils/vim-man', { 'on': 'Man' }             " Read man files in vim
-Plug 'vimwiki/vimwiki'                                " Wiki for vim
-Plug 'rakr/vim-one'                                   " Atom inspired colorscheme
-Plug 'editorconfig/editorconfig-vim'                  " Editorconfig support 
-Plug 'junegunn/fzf.vim'                               " Fuzzy finder fzf
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }             " Json plugin
-Plug 'elzr/vim-json', { 'for': 'json' }               " Csv plugin
-Plug 'ludovicchabant/vim-gutentags'                   " Generate your tags automatically
-Plug 'pelodelfuego/vim-swoop'                         " Emacs swiper clone
-Plug 'pangloss/vim-javascript'                        " Javascript plugin
-Plug 'skywind3000/quickmenu.vim'                      " Customizable quick menu
-Plug 'janko-m/vim-test'
+Plug 'mileszs/ack.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'bkad/CamelCaseMotion'
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
+Plug 'scrooloose/syntastic'
+Plug 'godlygeek/tabular'
+Plug 'majutsushi/tagbar'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'benmills/vimux'
+Plug 'vimwiki/vimwiki'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-grepper', { 'on': ['Grepper', '<plug>(GrepperOperator)'] }
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'vim-utils/vim-man', { 'on': 'Man' }
+Plug 'terryma/vim-smooth-scroll'
+Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-surround'
+Plug 'pelodelfuego/vim-swoop'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -154,11 +151,11 @@ set nofoldenable        " Disable auto folding
 " }}}
 " => Theme  {{{
 "
-" Set the dark theme
-set background=dark
-
 " Gruvbox colorscheme
 colorscheme gruvbox
+
+" Set the dark theme
+set background=dark
 
 " Line number section colors
 " Background color
@@ -520,12 +517,6 @@ endif
 " Toggle the undo tree
 nnoremap <silent><leader>uv :UndotreeToggle<cr>
 "}}}
-" => Tabular {{{
-map <Leader>e :Tabularize /=<cr>
-map <Leader>c :Tabularize /:<cr>
-map <Leader>es :Tabularize /=\zs<cr>
-map <Leader>cs :Tabularize /:\zs<cr>
-" }}}
 " => Tagbar {{{
 " Open/close tagbar with \b
 nmap <silent> <leader>t :TagbarToggle<CR>
