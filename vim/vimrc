@@ -195,7 +195,7 @@ noremap Q !!sh<cr>
 cmap w!! %!sudo tee > /dev/null %
 
 " Change directory to the curently edited file
-nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+map <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 " Mapping space button to open \ close folds
 nnoremap <space> za
@@ -360,7 +360,7 @@ let g:airline#extensions#tabline#show_tabs = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 " Airline theme
-let g:airline_theme='jellybeans'
+let g:airline_theme='badwolf'
 "}}}
 " => Autopairs {{{
 " Enable disable auto pairs with leader + p
