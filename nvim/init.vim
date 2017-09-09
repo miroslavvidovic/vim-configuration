@@ -9,44 +9,52 @@
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'mileszs/ack.vim'                                        " Ack search
-Plug 'jiangmiao/auto-pairs'                                   " Auto pairs
-Plug 'itchyny/lightline.vim'                                  " Light statusline
-Plug 'ap/vim-buftabline'                                      " Bufferline
-Plug 'MattesGroeger/vim-bookmarks'                            " Bookmarks
-Plug 'bkad/CamelCaseMotion'                                   " Camel case motion
-Plug 'ctrlpvim/ctrlp.vim'                                     " Fuzzy finder
-Plug 'easymotion/vim-easymotion'                              " Easy movement
-Plug 'airblade/vim-gitgutter'                                 " Git status and changes
-Plug 'nathanaelkane/vim-indent-guides'                        " Indentation guidelines
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }        " File explorer
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } " Autocomplete for NeoVim
-Plug 'zchee/deoplete-jedi'                                    " Deoplete completion for pyhton
-Plug 'terryma/vim-smooth-scroll'                              " Smooth scrolling
-Plug 'neomake/neomake'                                        " Async make,build and lint
-Plug 'tpope/vim-commentary'                                   " Easy way to comment 
-Plug 'tpope/vim-surround'                                     " Surround text
-Plug 'tpope/vim-fugitive'                                     " Interact with git
-Plug 'tpope/vim-dispatch'                                     " Dispatch and run commands
-Plug 'joshdick/onedark.vim'                                   " One dark theme
-Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }         " Rainbow colored parenthesis
-Plug 'mhinz/vim-startify'                                     " Nice startup screen
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'           " Snippets
-Plug 'majutsushi/tagbar'                                      " Tagbar
-Plug 'christoomey/vim-tmux-navigator'                         " Navigate between vim and tmux 
-Plug 'godlygeek/tabular'                                      " Align text
-Plug 'benmills/vimux'                                         " Interact with tmux from vim
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }            " UndoTree
-Plug 'vim-utils/vim-man', { 'on': 'Man' }                     " Read man files in vim
-Plug 'vimwiki/vimwiki'                                        " Wiki for vim
-Plug 'rakr/vim-one'                                           " Atom inspired colorscheme
-Plug 'editorconfig/editorconfig-vim'                          " Editorconfig support 
-Plug 'junegunn/fzf.vim'                                       " Fuzzy finder fzf
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } 
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }                     " Json plugin
-Plug 'elzr/vim-json', { 'for': 'json' }                       " Csv plugin
-Plug 'ludovicchabant/vim-gutentags'                           " Generate your tags automatically
-Plug 'metakirby5/codi.vim'                                    " Programmers scratchpad
+Plug 'mileszs/ack.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'bkad/CamelCaseMotion'
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggle' }
+Plug 'neomake/neomake'
+Plug 'junegunn/vim-easy-align'
+Plug 'majutsushi/tagbar'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'benmills/vimux'
+Plug 'vimwiki/vimwiki'
+Plug 'ap/vim-buftabline'
+Plug 'itchyny/lightline.vim'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'vim-utils/vim-man', { 'on': 'Man' }
+Plug 'terryma/vim-smooth-scroll'
+Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-surround'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
+Plug 'metakirby5/codi.vim'
+
+" Colorschemes
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'sjl/badwolf'
+Plug 'MaxSt/FlatColor'
+Plug 'w0ng/vim-hybrid'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -150,11 +158,11 @@ set nofoldenable        " Disable auto folding
 " }}}
 " => Theme  {{{
 "
+" Gruvbox colorscheme
+colorscheme gruvbox
+
 " Set the dark theme
 set background=dark
-
-" Gruvbox colorscheme
-colorscheme onedark
 
 " Line number section colors
 " Background color
@@ -359,7 +367,8 @@ map <Leader>k <Plug>(easymotion-k)
 " => Gitgutter {{{
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
-let g:gitgutter_sign_column_always = 1
+
+set signcolumn=yes
 highlight clear SignColumn
 " In vim-airline, only display "hunks" if the diff is non-zero
 let g:airline#extensions#hunks#non_zero_only = 1
