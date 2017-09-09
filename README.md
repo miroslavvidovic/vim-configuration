@@ -54,11 +54,11 @@ My personal Vim and Neovim settings
 * [dracula](https://github.com/dracula/vim)
 * [flatcolor](https://github.com/MaxSt/FlatColor)
 * [gruvbox](https://github.com/morhetz/gruvbox) - Default on Vim
-* [hybrid_material](https://github.com/kristijanhusak/vim-hybrid-material)
 * [hybrid](https://github.com/w0ng/vim-hybrid)
 * [jellybeans](https://github.com/nanotech/jellybeans.vim)
-* [minimalist](https://github.com/dikiaap/minimalist)
-* [Tomorrow-Night](https://github.com/chriskempson/vim-tomorrow-theme)
-* [wombat](https://github.com/vim-scripts/Wombat)
+* [one-dark](https://github.com/joshdick/onedark.vim)
+* [vim-one](https://github.com/rakr/vim-one)
 
 ## Key mappings
+
+My leader key is `č`, so whenever you see `<leader>` it means `č`. I use Serbian (Latin) layout on my keyboards and the `č` key is in place of `;` on English (US) layout keyboards. I like to have `č` as my leader key because it is on the [home row](https://www.computerhope.com/jargon/h/hrk.htm).

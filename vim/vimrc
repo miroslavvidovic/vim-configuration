@@ -47,6 +47,16 @@ Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
+" Colorschemes
+Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'sjl/badwolf'
+Plug 'MaxSt/FlatColor'
+Plug 'w0ng/vim-hybrid'
+
 " Add plugins to &runtimepath
 call plug#end()
 
