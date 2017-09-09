@@ -371,10 +371,6 @@ let g:airline#extensions#tabline#buffer_idx_mode = 1
 " Airline theme
 let g:airline_theme='badwolf'
 "}}}
-" => Autopairs {{{
-" Enable disable auto pairs with leader + p
-let g:AutoPairsShortcutToggle = '<leader>p'
-" }}}
 " => Bookmarks {{{
 " Highlight only the sign not the whole line
 let g:bookmark_highlight_lines = 0
