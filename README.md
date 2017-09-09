@@ -46,7 +46,6 @@ My personal Vim and Neovim settings
 * [vim-smooth-scroll](https://github.com/terryma/vim-smooth-scroll) - Make scrolling in Vim more pleasant 
 * [vim-startify](https://github.com/mhinz/vim-startify) - Fancy start screen for Vim
 * [vim-surround](https://github.com/tpope/vim-surround) - Quoting/parenthesizing made simple
-* [vim-swoop](https://github.com/pelodelfuego/vim-swoop) - Emacs swoop clone
 * [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) - Seamless navigation between tmux panes and vim splits 
 * [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - Code completion engine for Vim
 

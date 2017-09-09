@@ -44,7 +44,6 @@ Plug 'vim-utils/vim-man', { 'on': 'Man' }
 Plug 'terryma/vim-smooth-scroll'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
-Plug 'pelodelfuego/vim-swoop'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
