@@ -175,8 +175,8 @@ highlight LineNr ctermfg=133
 " }}}
 " => Key Mappings  {{{
 
-" Better mapping tor the leader key
-let mapleader = "č"
+" Better mapping for the leader key
+let mapleader = " "
 
 " Disable annoying F1 help screen
 " if you use vim in the terminal remember to
@@ -323,6 +323,12 @@ function Ptpython()
   call VimuxRunCommand("ptpython --vi")
 endfun
 
+" Open the current file in grip
+" https://github.com/joeyespo/grip
+function MarkdownPreview()
+  exec "Dispatch grip " . expand("%")
+  redraw!
+endfun
 " }}}
 " => Autocommands  {{{
 
@@ -366,7 +372,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 1
 " Set powerline fonts
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 " Airline theme
 let g:airline_theme='badwolf'
@@ -406,7 +412,7 @@ map <leader>bb :CtrlPBuffer<CR>
 "}}}
 " => Easymotion {{{
 " Need one more keystroke, but on average, it may be more comfortable.
-nmap ć <Plug>(easymotion-overwin-f2)
+nmap č <Plug>(easymotion-overwin-f2)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
@@ -415,7 +421,8 @@ map <Leader>l <Plug>(easymotion-bd-jk)
 " => Gitgutter {{{
 let g:gitgutter_enabled = 1
 let g:gitgutter_eager = 0
-let g:gitgutter_sign_column_always = 1
+" let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 highlight clear SignColumn
 " In vim-airline, only display "hunks" if the diff is non-zero
 let g:airline#extensions#hunks#non_zero_only = 1
@@ -508,7 +515,7 @@ map <Leader>vl :VimuxRunLastCommand<CR>
 " Run tig
 map <Leader>vt :VimuxRunCommand("tig")<CR>
 " }}} 
-" => Undo tree {{{
+"=> Undo tree {{{
 if has("persistent_undo")
   set undodir=~/.vim/undodir/
   set undofile
